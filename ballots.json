@@ -1,0 +1,26 @@
+[
+ {
+  "contracthash": "ba56265934aa02b8ade28fd720119f627e8c51a08bec77f143cf4731b1b9697a",
+  "name": "BEST_COOK_2069",
+  "candidates": [
+   "12tmRt6AADfQhfruF3RzFDdNhjiSEkwMvF",
+   "1HRK5H21wFguq5ecJF8FvQk28qYnPz1Qb9",
+   "1DngEcP2tCkxZNiAmm3Ar8VXXAAvAPfm8E"
+  ],
+  "totalcandidates": 3,
+  "start": "1635032651",
+  "end": "1635043569"
+ },
+ {
+  "contracthash": "cf261d57c969a3d60c6ca8e2e31d0f812b160bf907f1b1d4052921984150ab1b",
+  "name": "BEST_SAMOSA_LOL",
+  "candidates": [
+   "12tmRt6AADfQhfruF3RzFDdNhjiSEkwMvF",
+   "1HRK5H21wFguq5ecJF8FvQk28qYnPz1Qb9",
+   "1DngEcP2tCkxZNiAmm3Ar8VXXAAvAPfm8E"
+  ],
+  "totalcandidates": 3,
+  "start": "1635032651",
+  "end": "1635043569"
+ }
+]

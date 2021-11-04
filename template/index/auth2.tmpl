@@ -1,0 +1,109 @@
+{{define "title"}}BlockVote{{end}}
+{{define "head"}}{{end}}
+{{define "content"}}
+<div id= "voterinfo" class="continer">
+	<div class="page-header">
+		<h1>Hello, {{.first_name}}</h1>
+		<br>
+			<div class="user-data">
+				<h5>Aadhar Card : 3832 8238 7232</h5>
+				<h5>Phone No. : 7282847118 </h5>
+			</div>
+	</div>
+</div>
+
+<div id= "wall" class="continer">
+
+	<form id="walletform" action="{{.BaseURI}}generate" method="post">
+		<div class="form-group">
+			<label for="addr">Address :</label>
+			<div><input type="addr" class="form-control" id="addr" name="addr" maxlength="48" placeholder="Paste your Address here..." value="{{.wallet.Real.Address}}" /></div>
+			<label for="pvtkey">Private Key :</label>
+			<div><input type="pvtkey" class="form-control" id="pvtkey" name="pvtkey" maxlength="48" placeholder="Paste your Private key here..." value="{{.wallet.Real.Pvtkey}}" /></div>
+			<br>
+		</div>
+		<input type="hidden" id="WhichButton" name="change123" value="DEFAULT">
+		<input type="hidden" name="token" value="{{.token}}">
+	</form>
+</div>
+
+
+<!-- baaki button ke class idhar se dekh lena https://getbootstrap.com/docs/4.0/components/buttons/ -->
+
+<div id= "act" class="continer">
+
+		<a title="New Wallet" class="btn btn-primary" role="submit" onclick="NewWallet()">
+			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Wallet
+		</a>
+		<a title="Find Address" class="btn btn-success" role="submit" onclick="FindAddress()">
+			<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Find Address
+		</a>
+		<a title="cp adds" class="btn btn-light" role="submit" onclick="CopyClip()">
+			<span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+		</a>
+</div>
+
+
+
+<div id="container">
+	<div id= "column-left" class="continer">
+	<select id ="selectballot" onchange="showelectioninfo();" class="form-select" aria-label="Default select example">
+		<option value="" disabled="disabled" selected>Open this select menu</option>
+		{{range .ballots}}
+  		<option value="{{.ContractHash}}">{{.ElectionName}}</option>
+		{{end}}
+	</select>
+	</div>
+
+	<div id="column-right">
+		<p id=ballconhash></p>
+		<p id=ballname></p>
+		<p id=ballstart-end></p>
+		<p id=balltotalcandidates></p>
+		<select id ="ballcandidates" class="form-select" aria-label="Default select example">
+			<option value="" disabled="disabled" selected>Show Candidates...</option>
+		</select>
+	</div>
+</div>
+
+<!-- https://developer.mozilla.org/en-US/docs/Web/API/HTMLOptionElement/Option#syntax -->
+<!-- https://stackoverflow.com/questions/6840326/how-can-i-create-and-style-a-div-using-javascript/6840399 -->
+<!-- https://electrictoolbox.com/javascript-add-options-html-select -->
+
+
+
+<script>
+function showelectioninfo(){
+
+var d = document.getElementById("selectballot");
+var candies = document.getElementById("ballcandidates");
+let conhash = d.options[d.selectedIndex].value;
+const jsonstri = {{.ballotjson}};
+const ballots = JSON.parse(jsonstri);
+console.log(ballots);
+
+for (var i = 0; i < ballots.length; i++){
+	var ballot = ballots[i];
+	console.log(ballot.contracthash);
+	console.log(conhash);
+	if (ballot.contracthash.trim() === conhash.trim() ) {
+		document.getElementById("ballconhash").innerHTML = ballot.contracthash;
+		document.getElementById("ballname").innerHTML = ballot.name;
+		document.getElementById("ballstart-end").innerHTML = ballot.start.concat("  -   ",ballot.end);
+		document.getElementById("balltotalcandidates").innerHTML = ballot.totalcandidates;
+		document.getElementById("ballcandidates").innerHTML = ballot.candidates;
+		candies.options[candies.options.length] = new Option("Show Candidates...", "",false,true);
+		for (var i = 0; i < ballot.candidates.length; i++) {
+			candies.options[candies.options.length] = new Option(ballot.candidates[i], ballot.candidates[i],false,false);
+		}
+		return;
+	}
+}
+
+}
+</script>
+
+
+{{template "footer" .}}
+{{end}}
+{{define "foot"}}{{end}}

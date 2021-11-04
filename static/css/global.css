@@ -1,0 +1,81 @@
+/* Global Styles */
+body {
+  font-family: "Open Sans", Helvetica, Arial, sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+.page-header {
+	border-bottom: 0;
+	margin-top: 0;
+}
+
+/* #wall {
+  border-radius: 50px;
+  /* background: #e8eeb5; */
+/* } */
+
+.continer {
+  padding-right: 15px;
+  padding-left: 23px;
+  margin-right: 55px;
+  margin-left: 41px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+#voterinfo {
+  box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
+}
+
+#wall {
+  margin-bottom: 30px;
+  box-shadow: 0 1px 4px 0 rgb(0 0 0 / 10%);
+}
+
+.form-select {
+  width: 565px;
+  height: 49px;
+}
+
+.form-select option{
+  padding: 5px 0;
+  height: 49px;
+  width: 565px;
+  /* max-width: fit-content; */
+}
+
+/* Notification Styles */
+#flash-container {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 100;
+  margin: 0;
+}
+
+.alert-box-fixed {
+  margin: 0 15px 15px 0;
+}
+
+#container {
+	position: relative;
+  height: 250px;
+  padding-right: 15px;
+  padding-left: 23px;
+}
+#column-left {
+	width: 580px;
+  height: 230px;
+  box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
+}
+#column-right {
+	position: absolute;
+  box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
+	top: 10px;
+	right: 10px;
+	bottom: 10px;
+	width: 600px;
+}
