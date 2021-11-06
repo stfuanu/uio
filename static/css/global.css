@@ -26,13 +26,33 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 20px;
 }
 
+.continerinfo {
+  padding-right: 15px;
+  padding-left: 23px;
+  margin-right: 55px;
+  margin-left: 41px;
+  width: 640px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.continerwall {
+  padding-right: 15px;
+  padding-left: 23px;
+  margin-right: 55px;
+  width: 640px;
+  margin-left: 41px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
 #voterinfo {
   box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
 }
 
 #wall {
   margin-bottom: 30px;
-  box-shadow: 0 1px 4px 0 rgb(0 0 0 / 10%);
+  box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
 }
 
 .form-select {
@@ -41,6 +61,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .form-select option{
+  padding: 5px 0;
+  height: 49px;
+  width: 565px;
+  /* max-width: fit-content; */
+}
+
+.ballform-select {
+  width: 325px;
+  height: 49px;
+}
+
+.ballform-select option{
   padding: 5px 0;
   height: 49px;
   width: 565px;
@@ -63,19 +95,37 @@ h1, h2, h3, h4, h5, h6 {
 #container {
 	position: relative;
   height: 250px;
-  padding-right: 15px;
+  padding-right: 35px;
   padding-left: 23px;
+  box-shadow: 1px 1px 4px 0 rgb(0 0 0 / 10%);
+  margin-right: 55px;
+  margin-left: 41px;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 #column-left {
-	width: 580px;
+	width: 380px;
+  float:left;
   height: 230px;
   box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
 }
+
+#column-middle {
+  float:left;
+  width:368px;
+  height:260px;
+  margin-left:20px;
+  box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
+}
+
 #column-right {
 	position: absolute;
+  float:right;
   box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
 	top: 10px;
 	right: 10px;
 	bottom: 10px;
-	width: 600px;
+  height: 150px;
+	width: 300px;
+  margin-right: 210px;
 }

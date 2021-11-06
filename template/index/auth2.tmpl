@@ -1,7 +1,7 @@
 {{define "title"}}BlockVote{{end}}
 {{define "head"}}{{end}}
 {{define "content"}}
-<div id= "voterinfo" class="continer">
+<div id= "voterinfo" class="continerinfo">
 	<div class="page-header">
 		<h1>Hello, {{.first_name}}</h1>
 		<br>
@@ -12,15 +12,27 @@
 	</div>
 </div>
 
-<div id= "wall" class="continer">
+<div id= "wall" class="continerwall">
 
 	<form id="walletform" action="{{.BaseURI}}generate" method="post">
 		<div class="form-group">
-			<label for="addr">Address :</label>
-			<div><input type="addr" class="form-control" id="addr" name="addr" maxlength="48" placeholder="Paste your Address here..." value="{{.wallet.Real.Address}}" /></div>
-			<label for="pvtkey">Private Key :</label>
-			<div><input type="pvtkey" class="form-control" id="pvtkey" name="pvtkey" maxlength="48" placeholder="Paste your Private key here..." value="{{.wallet.Real.Pvtkey}}" /></div>
+			<div class="input-group input-group-lg">
+  			<span class="input-group-addon">
+    			<span class="glyphicon glyphicon-envelope"></span>
+  			</span>
+  			<input type="addr" class="form-control" id="addr" name="addr" maxlength="48" placeholder="Paste your Address here..." value="{{.wallet.Real.Address}}">
+			</div>
 			<br>
+			<div class="input-group input-group-lg">
+  			<span class="input-group-addon">
+    			<span class="glyphicon glyphicon-lock"></span>
+  			</span>
+  			<input type="pvtkey" class="form-control" id="pvtkey" name="pvtkey" maxlength="48" placeholder="Paste your Private key here..." value="{{.wallet.Real.Pvtkey}}" />
+			<span class="input-group-btn">
+        		<button class="btn btn-default" type="button" onclick="CopyClip()"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span></button>
+      		</span>
+			</div>
+			
 		</div>
 		<input type="hidden" id="WhichButton" name="change123" value="DEFAULT">
 		<input type="hidden" name="token" value="{{.token}}">
@@ -32,27 +44,33 @@
 
 <div id= "act" class="continer">
 
-		<a title="New Wallet" class="btn btn-primary" role="submit" onclick="NewWallet()">
+		<a title="New Wallet" id="NewWalletbtn" class="btn btn-primary" role="submit" onclick="NewWallet()">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> New Wallet
 		</a>
-		<a title="Find Address" class="btn btn-success" role="submit" onclick="FindAddress()">
-			<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Find Address
-		</a>
-		<a title="cp adds" class="btn btn-light" role="submit" onclick="CopyClip()">
-			<span class="glyphicon glyphicon-copy" aria-hidden="true"></span>
+		<a title="Find Address" id="FindAddressbtn" class="btn btn-success" role="submit" onclick="FindAddress()">
+			<span class="glyphicon glyphicon-search" aria-hidden="true"></span> Find Address
 		</a>
 </div>
 
 
 
 <div id="container">
-	<div id= "column-left" class="continer">
-	<select id ="selectballot" onchange="showelectioninfo();" class="form-select" aria-label="Default select example">
-		<option value="" disabled="disabled" selected>Open this select menu</option>
-		{{range .ballots}}
-  		<option value="{{.ContractHash}}">{{.ElectionName}}</option>
-		{{end}}
-	</select>
+	<div id= "column-left">
+		<div class="input-group input-group-lg">
+  			<span class="input-group-addon">
+    			<span class="glyphicon glyphicon-list"></span>
+  			</span>
+			<select id ="selectballot" onchange="showelectioninfo();" class="ballform-select" aria-label="Default select example">
+				<option value="" disabled="disabled" selected>Open this select menu</option>
+				{{range .ballots}}
+  				<option value="{{.ContractHash}}">{{.ElectionName}}</option>
+				{{end}}
+			</select>
+		</div>
+	</div>
+
+	<div id="column-middle">
+		<p id=ff>Here.... Candidate's Name , Party , Symbol etc..</p>
 	</div>
 
 	<div id="column-right">
@@ -60,11 +78,27 @@
 		<p id=ballname></p>
 		<p id=ballstart-end></p>
 		<p id=balltotalcandidates></p>
-		<select id ="ballcandidates" class="form-select" aria-label="Default select example">
+		<div class="input-group input-group-lg">
+  			<span class="input-group-addon">
+    			<span class="glyphicon glyphicon-user"></span>
+  			</span>
+		<select id ="ballcandidates" class="ballform-select" aria-label="Default select example">
 			<option value="" disabled="disabled" selected>Show Candidates...</option>
 		</select>
+		</div>
 	</div>
 </div>
+
+<div id= "act" class="continer">
+	<a title="Lock" id="LockUnlock" class="btn btn-warning" role="submit" onclick="LockUnlock()">
+		<span id="spanoflock" class="glyphicon glyphicon-flag" aria-hidden="true"></span>Verify & Lock
+	</a>
+	<a title="Lock" id="final vote" class="btn btn-danger" role="submit">
+		<span id="spanoflock" class="glyphicon glyphicon-flag" aria-hidden="true"></span>Vote!!
+	</a>
+</div>
+
+
 
 <!-- https://developer.mozilla.org/en-US/docs/Web/API/HTMLOptionElement/Option#syntax -->
 <!-- https://stackoverflow.com/questions/6840326/how-can-i-create-and-style-a-div-using-javascript/6840399 -->

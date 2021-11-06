@@ -1,0 +1,23 @@
+{{define "title"}}API Reference{{end}}
+{{define "head"}}{{end}}
+{{define "content"}}
+<div class="container">
+	<div class="page-header">
+		<h1>{{template "title" .}}</h1>
+	</div>
+	<p>Some description on api's here idk</p>
+    <a href="{{.BaseURI}}api/votes.json">GET votes.json</a>
+    <br>
+    <a href="{{.BaseURI}}api/ballots.json">GET ballots.json</a>
+    <br>
+    <a href="{{.BaseURI}}api/vote/00000c149e3398eceaa8a083c4aafdf69571f0396bc80e63d7cd2f853489d528">GET block hash</a>
+    <br>
+    <a href="{{.BaseURI}}api/vote/00000c149e3398eceaa8a083c4aafdf69571f0396bc80e63d7cd2f853489d528">idhar txn hash add krna hai</a>
+    <br>
+    <a href="{{.BaseURI}}">POST /api/vote/newvtx</a>
+    <br>
+    <a href="{{.BaseURI}}">POST /api/vote/newbtx</a>
+	{{template "footer" .}}
+</div>
+{{end}}
+{{define "foot"}}{{end}}

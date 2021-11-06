@@ -4,3 +4,12 @@
     width: 40%;
 }
 
+.input-group-lg>.form-control, .input-group-lg>.input-group-addon, .input-group-lg>.input-group-btn>.btn {
+    height: 41px;
+    font-size: 13px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 590px;
+}

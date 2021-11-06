@@ -27,7 +27,7 @@ function showFlash(obj)
         var rnum = _.random(0, 100000);
 		var message = '<div id="flash-message" class="alert-box-fixed'
 		+ rnum + ' alert-box-fixed alert alert-dismissible '+v.cssclass+'">'
-		+ '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+		+ '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden=true>&times;</span></button>'
 		+ v.message + '</div>';
         $('#flash-container').prepend(message);
         hideFlash(rnum);
@@ -63,6 +63,57 @@ function NewWallet(){
 function FindAddress(){
     document.getElementById("WhichButton").value = "FIND_ADDRESS";
     document.getElementById('walletform').submit();
+}
+
+function LockUnlock()
+{
+    if (document.getElementById("LockUnlock").innerText === "Verify & Lock") {
+
+
+        if (document.getElementById("ballcandidates").value === '') {
+            alert("Make sure , You have selected an Election & a Candidate to votw .")
+            return
+        } else if (/^1[a-zA-Z0-9]{30,40}/.test(document.getElementById("addr").value) === false ) {
+            alert("Invalid Address!")
+            return
+        } else if (document.getElementById("ballcandidates").value === '') {
+            alert("Private Key field , can't be empty")
+            return
+        }
+        document.getElementById("LockUnlock").innerText = "Unlock & Edit"
+        document.getElementById("LockUnlock").className = "btn btn-info";
+
+        document.getElementById("ballcandidates").disabled = true;
+        document.getElementById("addr").disabled = true;
+        document.getElementById("pvtkey").disabled = true;
+        document.getElementById("selectballot").disabled = true;
+
+        document.getElementById("NewWalletbtn").style.pointerEvents="none";
+        document.getElementById("NewWalletbtn").style.cursor="default";
+
+        document.getElementById("FindAddressbtn").style.pointerEvents="none";
+        document.getElementById("FindAddressbtn").style.cursor="default";
+        alert("YOUR VOTE IS LOCKED , CLICK Vote !!!")
+
+        return
+    } else if (document.getElementById("LockUnlock").innerText === "Unlock & Edit") {
+        document.getElementById("LockUnlock").innerText = "Verify & Lock"
+        document.getElementById("LockUnlock").className = "btn btn-warning"; 
+        
+        document.getElementById("ballcandidates").disabled = false;
+        document.getElementById("addr").disabled = false;
+        document.getElementById("pvtkey").disabled = false;
+        document.getElementById("selectballot").disabled = false;
+
+        document.getElementById("NewWalletbtn").style.pointerEvents="auto";
+        document.getElementById("NewWalletbtn").style.cursor="pointer";
+
+        document.getElementById("FindAddressbtn").style.pointerEvents="auto";
+        document.getElementById("FindAddressbtn").style.cursor="pointer";
+
+        alert("Unlocked , You can Edit & resubmit !!!")
+        return
+    }
 }
 
 function display_ct7() {

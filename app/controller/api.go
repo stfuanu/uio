@@ -8,6 +8,8 @@ import (
 	"net/http"
 
 	// "errors"
+	"uio/app/shared/session"
+	"uio/app/shared/view"
 	core "uio/core"
 
 	"github.com/gorilla/context"
@@ -32,6 +34,13 @@ type ResponseToVoter struct {
 	Message   string `json:"message"`
 	Timestamp string `json:"timestamp"`
 	Hash      string `json:"hash,omitempty"`
+}
+
+func APIGET(w http.ResponseWriter, r *http.Request) {
+	// Display the view
+	v := view.New(r)
+	v.Name = "api/api"
+	v.Render(w)
 }
 
 func GetBlockchain(w http.ResponseWriter, r *http.Request) {
@@ -202,6 +211,55 @@ func NewBallot(w http.ResponseWriter, r *http.Request) {
 
 		}
 	}
+
+}
+
+func NewBallotweb(w http.ResponseWriter, r *http.Request) {
+	// Get session
+	sess := session.Instance(r)
+
+	// Validate with required fields
+	if validate, missingField := view.Validate(r, []string{"note"}); !validate {
+		sess.AddFlash(view.Flash{"Field missing: " + missingField, view.FlashError})
+		sess.Save(r, w)
+		// NotepadCreateGET(w, r)
+		return
+	}
+	// validate with database first
+	// then gather all data to be supplied
+	// figure out how to inlcude wallet with form data from user//
+
+	// Get form values
+	// content := r.FormValue("note")
+
+	// Display the same page
+	// NotepadCreateGET(w, r)
+
+	// addedORnot, err, hashifany := core.Addnewblock("BALLOT", NewBallot.Voter, "SMART_CONTRACT", NewBallot.contra)
+
+}
+func NewVoteweb(w http.ResponseWriter, r *http.Request) {
+	// Get session
+	sess := session.Instance(r)
+
+	// Validate with required fields
+	if validate, missingField := view.Validate(r, []string{"note"}); !validate {
+		sess.AddFlash(view.Flash{"Field missing: " + missingField, view.FlashError})
+		sess.Save(r, w)
+		// NotepadCreateGET(w, r)
+		return
+	}
+	// validate with database first
+	// then gather all data to be supplied
+	// figure out how to inlcude wallet with form data from user//
+
+	// Get form values
+	// content := r.FormValue("note")
+
+	// Display the same page
+	// NotepadCreateGET(w, r)
+
+	// addedORnot, err, hashifany := core.Addnewblock("BALLOT", NewBallot.Voter, "SMART_CONTRACT", NewBallot.contra)
 
 }
 
