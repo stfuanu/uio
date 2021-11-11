@@ -5,6 +5,9 @@ $(function() {
     hideFlash();
 });
 
+// 14sNixMpyH2L1KQNaudxJm2CakhYgYEDtJ
+// 140edf6c44171ab7c93cb2df9da9cb56d253757c4b16badfde6cdfba86514b
+
 function hideFlash(rnum)
 {    
     if (!rnum) rnum = '0';
@@ -64,6 +67,26 @@ function FindAddress(){
     document.getElementById("WhichButton").value = "FIND_ADDRESS";
     document.getElementById('walletform').submit();
 }
+function VoteNow(){
+
+    if (document.getElementById("LockUnlock").innerText !== "Unlock & Edit") {
+        alert("Verify & Lock Your vote , before Voting!")
+        return
+    }
+
+    document.getElementById("popcontract").value = document.querySelector("#selectballot").value;
+    document.getElementById("popcandy").value = document.querySelector("#ballcandidates").value;
+    //  create form dynamically & submit it 
+    // https://www.geeksforgeeks.org/how-to-create-a-form-dynamically-with-the-javascript/
+
+    // alert("works")
+    // reminder : validate all form input are there (later)
+    document.getElementById('myForm').submit();
+}
+
+function closepopup() {
+    document.getElementById("myForm").style.display = "none";
+  }
 
 function LockUnlock()
 {
@@ -152,14 +175,26 @@ function CopyClip() {
 
     var copyText = document.getElementById("pvtkey");
   
-    /* Select the text field */
     copyText.select();
-    copyText.setSelectionRange(0, 99999); /* For mobile devices */
-  
-    /* Copy the text inside the text field */
-    navigator.clipboard.writeText(copyText.value);
+    document.execCommand('copy');
     
 }
+
+// function copyToClipboard(text) {
+
+//     // exec command sirf textarea/input field pr work krta hai , becoz we can "select" only those tags ig ,
+//     //  thats's y we create new input ofr copying p or h1 tag 
+
+//     //  refer : https://www.youtube.com/watch?v=O269ctk5b5k
+//     var keyy = document.querySelector("#pvtkey").value;
+
+//     let input = document.crea
+//     input.value = text;
+//     input.focus();
+//     input.select();
+//     document.execCommand('copy');
+//     input.parentNode.removeChild(input);
+//   }
 
 // ex:
 // [{"contracthash":"ba56265934aa02b8ade28fd720119f627e8c51a08bec77f143cf4731b1b9697a","name":"BEST_COOK_2069",

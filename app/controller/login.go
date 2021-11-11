@@ -98,7 +98,9 @@ func LoginPOST(w http.ResponseWriter, r *http.Request) {
 			sess.Values["email"] = email
 			sess.Values["first_name"] = result.FirstName
 			// fmt.Println(wall, sess.Values["id"])
-			sess.Values["wallet"] = core.MakeWallet()
+			NEW_WALLET := core.MakeWallet()
+			sess.Values["wallet"] = NEW_WALLET
+			sess.Values["addrinfo"] = core.GetAllInfoByAddr(NEW_WALLET.Real.Address)
 			err := sess.Save(r, w)
 
 			if err != nil {

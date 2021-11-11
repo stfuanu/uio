@@ -42,6 +42,7 @@ type Vote struct { // add timestamp of transaction
 }
 
 type Ballot struct {
+	BTXhash         string   `json:"btxhash"`
 	ContractHash    string   `json:"contracthash"`
 	ElectionName    string   `json:"name"`
 	Candidates      []string `json:"candidates"`
@@ -64,6 +65,64 @@ func CalculateTXN_HASH(vtx Vote) string {
 	h.Write([]byte(record))
 	hashed := h.Sum(nil)
 	return hex.EncodeToString(hashed)
+}
+
+type AjaxLive struct {
+	Total_Blocks         int    `json:"total_blocks"`
+	Total_txn            int    `json:"total_txn"`
+	Total_btx            int    `json:"total_btx"`
+	Total_vtx            int    `json:"total_vtx"`
+	Total_ballots        int    `json:"total_ballots"`
+	Latest_Block         int    `json:"total_bloc"`
+	Latest_BlockHash     string `json:"total_blocHash"`
+	Latest_TxnHash       string `json:"latest_txnHash"`
+	LatestBlockTimeStamp string `json:"latest_block_stamp"`
+	LatestVoteTimeStamp  string `json:"latest_vote_stamp"`
+}
+
+var RealLive AjaxLive
+
+func GetLiveStat() {
+
+	// latest wale creation ke time update ho jayenge
+	// Total wale one time loop se
+	livestat := &AjaxLive{
+		Total_Blocks:  len(Blockchain),
+		Total_ballots: len(Ballots),
+	}
+	livestat.SetVoteStat()
+
+	RealLive = *livestat
+	// fmt.Println(RealLive)
+
+	// return *livestat
+
+}
+
+func (stat *AjaxLive) SetVoteStat() {
+
+	for _, block := range Blockchain {
+		// stat.Total_Blocks++
+		for _, vtx := range block.Votes {
+			stat.Total_txn++
+			if vtx.Candidate == "SMART_CONTRACT" {
+				stat.Total_btx++
+				// stat.Total_ballots++
+
+			} else {
+				stat.Total_vtx++
+			}
+		}
+	}
+	Block := Blockchain[stat.Total_Blocks-1]
+	vtx := Block.Votes[len(Block.Votes)-1]
+
+	stat.Latest_TxnHash = vtx.TXID
+	stat.LatestVoteTimeStamp = vtx.Timestamp
+	stat.LatestBlockTimeStamp = Block.Timestamp
+	stat.Latest_BlockHash = Block.Hash
+	stat.Latest_Block = Block.Index
+
 }
 
 var Blockchain []Block
@@ -266,14 +325,14 @@ func Verify(vtx Vote) bool {
 	return true
 }
 
-func NewTXN(voterID string, candidateID string, contract string) Vote {
+func NewTXN(w Wallet, candidateID string, contract string) Vote {
 
 	// fmt.Println("here txn", contract, candidateID)
 
 	// fortestonly
-	w := MakeWallet()
+	// w := MakeWallet()
 	// vinfo := VoterInfo{voterID,w.PublicKey,"signature"}
-	voterID = fmt.Sprintf("%s", w.Address())
+	voterID := fmt.Sprintf("%s", w.Address())
 
 	vinfo := VoterInfo{
 		Address:   voterID,
@@ -295,7 +354,7 @@ func NewTXN(voterID string, candidateID string, contract string) Vote {
 
 }
 
-func NewBTX(Base58_Contract string) Vote { // voterid & candy(defualt) dono idhar hi ban rahe toh kya hi args pass krna
+func NewBTX(w Wallet, Base58_Contract string) Vote { // voterid & candy(defualt) dono idhar hi ban rahe toh kya hi args pass krna
 
 	// NewBallot.TotalCandidates = len(NewBallot.Candidates) // do this when making ballot & it's enco
 
@@ -303,7 +362,7 @@ func NewBTX(Base58_Contract string) Vote { // voterid & candy(defualt) dono idha
 
 	// fortestonly
 	// fmt.Println("here btx", Base58_Contract)
-	w := MakeWallet()
+	// w := MakeWallet()
 	// vinfo := VoterInfo{voterID,w.PublicKey,"signature"}
 	owneraddr := fmt.Sprintf("%s", w.Address())
 
@@ -466,7 +525,16 @@ func CountVotes(addr string, contract string) int {
 
 }
 
-func Addnewblock(VoteORBallot string, VOTER_ADDRESS string, CANDY_ADDRESS string, CONTRACT_HASH string) (bool, error, string) {
+func Addnewblock(voter_pvtkey string, VoteORBallot string, CANDY_ADDRESS string, CONTRACT_HASH string) (bool, error, string) {
+	var err error
+	var voter_wallet *Wallet
+
+	voter_wallet, err = FindWalletByPvtKey(voter_pvtkey)
+	if err != nil {
+		return false, err, "NAN"
+	}
+
+	VOTER_ADDRESS := voter_wallet.Real.Address
 
 	// ADD Contract ballots txns to vote.json , make more if/elses for contract timestamp/candidate exists stuff .
 
@@ -503,7 +571,7 @@ func Addnewblock(VoteORBallot string, VOTER_ADDRESS string, CANDY_ADDRESS string
 		// check if contract is available & candidates are there in encoded
 		// GET ballot type using checkcon
 
-		tx = NewTXN(VOTER_ADDRESS, CANDY_ADDRESS, CONTRACT_HASH)
+		tx = NewTXN(*voter_wallet, CANDY_ADDRESS, CONTRACT_HASH)
 
 		if !Verify(tx) {
 			return false, fmt.Errorf("Signature Verification Error : false "), "NAN"
@@ -533,7 +601,8 @@ func Addnewblock(VoteORBallot string, VOTER_ADDRESS string, CANDY_ADDRESS string
 			return false, fmt.Errorf("Contract Json format error : %s ", CONTRACT_HASH), "NAN"
 		}
 
-		tx = NewBTX(CONTRACT_HASH)
+		tx = NewBTX(*voter_wallet, CONTRACT_HASH)
+		new_ballot.BTXhash = tx.TXID
 		if !Verify(tx) {
 			return false, fmt.Errorf("Signature Verification Error : false "), "NAN"
 		}
@@ -667,7 +736,7 @@ func Addnewblock(VoteORBallot string, VOTER_ADDRESS string, CANDY_ADDRESS string
 	Blockchain = append(Blockchain, blk_new)
 	file, _ := json.MarshalIndent(Blockchain, "", " ")
 
-	err := ioutil.WriteFile("votes.json", file, 0644)
+	err = ioutil.WriteFile("votes.json", file, 0644)
 	if err != nil {
 		log.Println(err)
 	}
@@ -689,11 +758,34 @@ func Addnewblock(VoteORBallot string, VOTER_ADDRESS string, CANDY_ADDRESS string
 	// Top()
 
 	if latest_Hash == blk_new.Hash {
+		blk_new.UpdateBlockLive()
+		tx.UpdateVoteLive(VoteORBallot) // later would have to change maybe
 		return true, nil, latest_Hash
 	} else {
 		return false, fmt.Errorf("Error : Block Not Added to Blockchain "), "NAN"
 	}
 
+}
+
+func (block *Block) UpdateBlockLive() {
+	RealLive.Latest_BlockHash = block.Hash
+	RealLive.Latest_Block = block.Index
+	RealLive.LatestBlockTimeStamp = block.Timestamp
+	RealLive.Total_Blocks = len(Blockchain)
+
+}
+func (tx *Vote) UpdateVoteLive(voteorball string) {
+	RealLive.Latest_TxnHash = tx.TXID
+	RealLive.Total_txn++
+	RealLive.LatestVoteTimeStamp = tx.Timestamp
+
+	if voteorball == "BALLOT" {
+		RealLive.Total_btx++
+		// latest btxhash maybe next idk
+
+	} else if voteorball == "VOTE" {
+		RealLive.Total_vtx++
+	}
 }
 
 func CandyExists(candidates []string, cand string) bool {

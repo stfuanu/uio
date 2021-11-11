@@ -51,6 +51,41 @@ type Wallet struct {
 	Real       RealWallet
 }
 
+type AddrInfo struct {
+	AsVoter_VtxID     []Vote
+	AsCandidate_VtxID []Vote
+	Ballot_BtxID      []Vote
+	NumofTxns         int
+}
+
+func GetAllInfoByAddr(address string) AddrInfo {
+
+	var voteslice []Vote
+	var candyslice []Vote
+	var ballot []Vote
+	var ttxn int
+	// fmt.Println("getallinfoaddr ran")
+
+	for _, block := range Blockchain {
+		for _, vtx := range block.Votes {
+			if vtx.Voter.Address == address {
+				voteslice = append(voteslice, vtx)
+				ttxn++
+			} else if vtx.Voter.Address == address && vtx.Candidate == "SMART_CONTRACT" {
+				ballot = append(ballot, vtx)
+				ttxn++
+			} else if vtx.Candidate == address {
+				candyslice = append(candyslice, vtx)
+				ttxn++
+			}
+		}
+	}
+
+	addressinfo := AddrInfo{voteslice, candyslice, ballot, ttxn}
+
+	return addressinfo
+}
+
 func FindWalletByPvtKey(pvtkey string) (*Wallet, error) {
 	wallit := &Wallet{}
 	err := errors.New("Couldn't reproduce PrivateKey .")

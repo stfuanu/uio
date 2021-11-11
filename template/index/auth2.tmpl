@@ -8,35 +8,75 @@
 			<div class="user-data">
 				<h5>Aadhar Card : 3832 8238 7232</h5>
 				<h5>Phone No. : 7282847118 </h5>
+				<!-- <h5> addrdata : {{.addrinfo}}</h5> -->
 			</div>
 	</div>
 </div>
 
-<div id= "wall" class="continerwall">
 
+<div class="continerwalll">
+	<div id="wall" class="continerwall-left">
 	<form id="walletform" action="{{.BaseURI}}generate" method="post">
 		<div class="form-group">
-			<div class="input-group input-group-lg">
-  			<span class="input-group-addon">
-    			<span class="glyphicon glyphicon-envelope"></span>
-  			</span>
-  			<input type="addr" class="form-control" id="addr" name="addr" maxlength="48" placeholder="Paste your Address here..." value="{{.wallet.Real.Address}}">
-			</div>
+			<div class="input-group input-group-lg"> <span class="input-group-addon">
+			<span class="glyphicon glyphicon-envelope"></span> </span>
+				<input type="addr" class="form-control" id="addr" name="addr" maxlength="66" placeholder="Paste your Address here..." value="{{.wallet.Real.Address}}"> </div>
 			<br>
-			<div class="input-group input-group-lg">
-  			<span class="input-group-addon">
-    			<span class="glyphicon glyphicon-lock"></span>
-  			</span>
-  			<input type="pvtkey" class="form-control" id="pvtkey" name="pvtkey" maxlength="48" placeholder="Paste your Private key here..." value="{{.wallet.Real.Pvtkey}}" />
-			<span class="input-group-btn">
-        		<button class="btn btn-default" type="button" onclick="CopyClip()"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span></button>
-      		</span>
+			<div class="input-group input-group-lg"> <span class="input-group-addon">
+			<span class="glyphicon glyphicon-lock"></span> </span>
+				<input type="pvtkey" class="form-control" id="pvtkey" name="pvtkey" maxlength="80" placeholder="Paste your Private key here..." value="{{.wallet.Real.Pvtkey}}" /> <span class="input-group-btn">
+			<button class="btn btn-default" type="button" onclick="CopyClip()"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span></button>
+				</span>
 			</div>
-			
 		</div>
 		<input type="hidden" id="WhichButton" name="change123" value="DEFAULT">
-		<input type="hidden" name="token" value="{{.token}}">
-	</form>
+		<input type="hidden" name="token" value="{{.token}}"> </form>
+	</div>
+
+
+	<div id="wallss" class="continerwall-right">
+		<div class="card">
+			<div class="card-header">
+				<ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+					<li class="nav-item"><a class="nav-link active" id="voter-tab" data-toggle="tab" href="#voter" role="tab" aria-controls="voter" aria-selected="true">Voter</a></li>
+					<li class="nav-item"><a class="nav-link" id="candidate-tab" data-toggle="tab" href="#candidate" role="tab" aria-controls="candidate" aria-selected="false">Candidate</a></li>
+					<li class="nav-item"><a class="nav-link" id="ballot-tab" data-toggle="tab" href="#ballot" role="tab" aria-controls="ballot" aria-selected="false">Ballot</a></li>
+					<li class="nav-item"><a href="#"> Total TXN's <span class="badge">{{.addrinfo.NumofTxns}}</span></a></li>
+				</ul>
+			</div>
+			<div class="card-body" id="card">
+				<div class="tab-content" id="myTabContent">
+					<div class="tab-pane active" id="voter" role="tabpanel" aria-labelledby="voter-tab">
+						<div class="panel panel-default">
+							<div class="list-group">
+								{{range .addrinfo.AsVoter_VtxID}}
+  								<a href="#" class="list-group-item list-group-item-success">{{.TXID}}</a>
+								{{end}}
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane" id="candidate" role="tabpanel" aria-labelledby="candidate-tab">
+						<div class="panel panel-default">
+							<div class="list-group">
+								{{range .addrinfo.AsCandidate_VtxID}}
+  								<a href="#" class="list-group-item list-group-item-success">{{.TXID}}</a>
+								{{end}}
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane" id="ballot" role="tabpanel" aria-labelledby="ballot-tab">
+						<div class="panel panel-default">
+							<div class="list-group">
+								{{range .addrinfo.Ballot_BtxID}}
+  								<a href="#" class="list-group-item list-group-item-success">{{.TXID}}</a>
+								{{end}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 
@@ -53,6 +93,28 @@
 </div>
 
 
+<p> <strong id="livedata">0</strong> </p>
+
+
+<script>
+	document.addEventListener('DOMContentLoaded',function () {
+		startlive();
+	});
+	
+	function startlive() {
+		const place = document.getElementById('livedata');
+		setInterval(function () {
+			fetch('api/live').then(function (response) {
+				return response.json();
+			}).then(function (data) {
+				place.textContent = data.total_blocks;
+			}).catch(function (error) {
+				console.log(error);
+			});
+
+		}, 2000);
+	}
+</script>
 
 <div id="container">
 	<div id= "column-left">
@@ -63,7 +125,7 @@
 			<select id ="selectballot" onchange="showelectioninfo();" class="ballform-select" aria-label="Default select example">
 				<option value="" disabled="disabled" selected>Open this select menu</option>
 				{{range .ballots}}
-  				<option value="{{.ContractHash}}">{{.ElectionName}}</option>
+  				<option value="{{.BTXhash}}">{{.ElectionName}}</option>
 				{{end}}
 			</select>
 		</div>
@@ -93,11 +155,20 @@
 	<a title="Lock" id="LockUnlock" class="btn btn-warning" role="submit" onclick="LockUnlock()">
 		<span id="spanoflock" class="glyphicon glyphicon-flag" aria-hidden="true"></span>Verify & Lock
 	</a>
-	<a title="Lock" id="final vote" class="btn btn-danger" role="submit">
+	<a title="Lock" id="final vote" class="btn btn-danger" role="submit" onclick="VoteNow()">
 		<span id="spanoflock" class="glyphicon glyphicon-flag" aria-hidden="true"></span>Vote!!
 	</a>
 </div>
 
+<div id= "walssl" class="contissnerwall">
+  <form id="myForm" action="{{.BaseURI}}vote/newvtx" method="post">
+	<input type="hidden" id="poppvtkey" name="poppvtkey" value = "{{.wallet.Real.Pvtkey}}">
+	<input type="hidden" id="popvoteorball" name="popvoteorball" value = "VOTE">
+	<input type="hidden" id="popcontract" name="popcontract" value = "dd">
+	<input type="hidden" id="popcandy" name="popcandy" value = "dsd">
+	<input type="hidden" id="popddcandy" name="token" value="{{.token}}">
+  </form>
+</div>
 
 
 <!-- https://developer.mozilla.org/en-US/docs/Web/API/HTMLOptionElement/Option#syntax -->
@@ -114,14 +185,11 @@ var candies = document.getElementById("ballcandidates");
 let conhash = d.options[d.selectedIndex].value;
 const jsonstri = {{.ballotjson}};
 const ballots = JSON.parse(jsonstri);
-console.log(ballots);
 
 for (var i = 0; i < ballots.length; i++){
 	var ballot = ballots[i];
-	console.log(ballot.contracthash);
-	console.log(conhash);
-	if (ballot.contracthash.trim() === conhash.trim() ) {
-		document.getElementById("ballconhash").innerHTML = ballot.contracthash;
+	if (ballot.btxhash.trim() === conhash.trim() ) {
+		document.getElementById("ballconhash").innerHTML = ballot.btxhash;
 		document.getElementById("ballname").innerHTML = ballot.name;
 		document.getElementById("ballstart-end").innerHTML = ballot.start.concat("  -   ",ballot.end);
 		document.getElementById("balltotalcandidates").innerHTML = ballot.totalcandidates;

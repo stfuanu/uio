@@ -86,6 +86,10 @@ func routes() *httprouter.Router {
 		New().
 		ThenFunc(controller.APIGET)))
 
+	r.GET("/api/live", hr.Handler(alice.
+		New().
+		ThenFunc(controller.LiveStat)))
+
 	r.GET("/api/votes.json", hr.Handler(alice.
 		New().
 		ThenFunc(controller.GetBlockchain)))
@@ -98,11 +102,11 @@ func routes() *httprouter.Router {
 		ThenFunc(controller.GetBlock)))
 
 	r.POST("/vote/newvtx", hr.Handler(alice.
-		New(acl.DisallowAuth).
+		New().
 		ThenFunc(controller.NewVoteweb)))
 
 	r.POST("/vote/newbtx", hr.Handler(alice.
-		New(acl.DisallowAuth).
+		New().
 		ThenFunc(controller.NewBallotweb)))
 
 	r.POST("/api/vote/newvtx", hr.Handler(alice.

@@ -36,16 +36,6 @@ h1, h2, h3, h4, h5, h6 {
   margin-top: 20px;
 }
 
-.continerwall {
-  padding-right: 15px;
-  padding-left: 23px;
-  margin-right: 55px;
-  width: 640px;
-  margin-left: 41px;
-  margin-bottom: 20px;
-  margin-top: 20px;
-}
-
 #voterinfo {
   box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
 }
@@ -92,6 +82,8 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 15px 15px 0;
 }
 
+
+/* dark theme : https://hackerrishad.me/ */
 #container {
 	position: relative;
   height: 250px;
@@ -103,6 +95,34 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 20px;
   margin-top: 20px;
 }
+
+.continerwalll {
+  position: relative;
+  height: 133px;
+  padding-right: 35px;
+  padding-left: 8px;
+  box-shadow: 1px 1px 4px 0 rgb(0 0 0 / 10%);
+  margin-right: 55px;
+  margin-left: 41px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.continerwall-left {
+  float:left;
+  box-shadow: 1px 1px 4px 0 rgb(0 0 0 / 10%);
+  width: 640px;
+}
+
+.continerwall-right {
+
+  float:left;
+  width:568px;
+  height:80px;
+  margin-left:171px;
+  box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
+
+}
+
 #column-left {
 	width: 380px;
   float:left;

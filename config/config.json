@@ -37,7 +37,7 @@
 		"Options": {
 			"Path": "/",
 			"Domain": "",
-			"MaxAge": 3600,
+			"MaxAge": 29600,
 			"Secure": false,
 			"HttpOnly": true
 		}

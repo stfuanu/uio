@@ -33,6 +33,7 @@ func main() {
 
 	// fmt.Println(app2.STFU())
 	core.LoadChains()
+	core.GetLiveStat()
 	// rand.Seed(time.Now().UnixNano())
 	// var randnum int
 	// core.TestBallot("ELECTION_1")

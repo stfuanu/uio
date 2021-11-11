@@ -1,5 +1,6 @@
 [
  {
+  "btxhash": "573663c88b1b4e938c928f914151348ea4c59bd45f38e4304327193357ba13ab",
   "contracthash": "ba56265934aa02b8ade28fd720119f627e8c51a08bec77f143cf4731b1b9697a",
   "name": "BEST_COOK_2069",
   "candidates": [
@@ -12,6 +13,7 @@
   "end": "1635043569"
  },
  {
+  "btxhash": "1ef9129a5373106aa552612761487a032b68556fea269a438e1b33add080ee09",
   "contracthash": "cf261d57c969a3d60c6ca8e2e31d0f812b160bf907f1b1d4052921984150ab1b",
   "name": "BEST_SAMOSA_LOL",
   "candidates": [

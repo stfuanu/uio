@@ -54,6 +54,18 @@ func GetBlockchain(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, string(bb))
 }
 
+func LiveStat(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	bb, err := json.MarshalIndent(core.RealLive, "", "  ")
+	// fmt.Println(string(bb))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	io.WriteString(w, string(bb))
+}
+
 // GetBallots
 func GetBallots(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
@@ -243,10 +255,18 @@ func NewVoteweb(w http.ResponseWriter, r *http.Request) {
 	sess := session.Instance(r)
 
 	// Validate with required fields
-	if validate, missingField := view.Validate(r, []string{"note"}); !validate {
+	if validate, missingField := view.Validate(r, []string{"poppvtkey", "popvoteorball", "popcontract", "popcandy"}); !validate {
 		sess.AddFlash(view.Flash{"Field missing: " + missingField, view.FlashError})
 		sess.Save(r, w)
-		// NotepadCreateGET(w, r)
+		IndexGET(w, r)
+		return
+	}
+	pvtkey := r.FormValue("poppvtkey")
+	voter_wallet, err := core.FindWalletByPvtKey(pvtkey)
+	if err != nil {
+		sess.AddFlash(view.Flash{"Error while generating address from pvtkey : " + pvtkey, view.FlashError})
+		sess.Save(r, w)
+		IndexGET(w, r)
 		return
 	}
 	// validate with database first
@@ -254,13 +274,58 @@ func NewVoteweb(w http.ResponseWriter, r *http.Request) {
 	// figure out how to inlcude wallet with form data from user//
 
 	// Get form values
-	// content := r.FormValue("note")
+
+	voteorball := r.FormValue("popvoteorball")
+	contract := r.FormValue("popcontract")
+	candyaddrr := r.FormValue("popcandy")
+
+	addedORnot, err, hashifany := core.Addnewblock(pvtkey, voteorball, candyaddrr, contract)
+
+	VOTER_ADDRESS := voter_wallet.Real.Address
+
+	if err != nil || !addedORnot || hashifany == "NAN" {
+		log.Println(err)
+		sess.AddFlash(view.Flash{Message: err.Error(), Class: view.FlashError})
+		sess.Values["addrinfo"] = core.GetAllInfoByAddr(VOTER_ADDRESS)
+		sess.Save(r, w)
+		http.Redirect(w, r, "/", http.StatusFound)
+		IndexGET(w, r)
+		return
+	} else {
+		jsonst, respodata := WhatHappened2(http.StatusOK, "Success", hashifany)
+		sess.Values["whappjson"] = jsonst
+		sess.Values["respodata"] = respodata
+		sess.AddFlash(view.Flash{Message: jsonst, Class: view.FlashSuccess})
+		sess.Values["addrinfo"] = core.GetAllInfoByAddr(VOTER_ADDRESS)
+		sess.Save(r, w)
+		http.Redirect(w, r, "/", http.StatusFound)
+		IndexGET(w, r)
+
+	}
 
 	// Display the same page
 	// NotepadCreateGET(w, r)
 
 	// addedORnot, err, hashifany := core.Addnewblock("BALLOT", NewBallot.Voter, "SMART_CONTRACT", NewBallot.contra)
 
+}
+
+func WhatHappened2(statuscode int, mess string, hashh string) (string, ResponseToVoter) {
+
+	data := &ResponseToVoter{
+		Status:    statuscode,
+		Message:   mess,
+		Timestamp: core.Getlocaltime(),
+		// Hash:      "newhash",
+	}
+
+	if hashh != "NAN" {
+		data.Hash = hashh
+	}
+	bb, err := json.MarshalIndent(*data, "", "  ")
+
+	core.Handle(err)
+	return string(bb), *data
 }
 
 //external call , bahar se hi bsse58 bankr aana bhai

@@ -26,6 +26,7 @@ func init() {
 	gob.Register(Flash{})
 	gob.Register(core.Wallet{})
 	gob.Register(core.RealWallet{})
+	gob.Register(core.AddrInfo{})
 	//panic: gob: type not registered for interface: elliptic.p256Curve
 	gob.Register(elliptic.P256())
 
