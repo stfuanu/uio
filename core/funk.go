@@ -74,7 +74,7 @@ type AjaxLive struct {
 	Total_vtx            int    `json:"total_vtx"`
 	Total_ballots        int    `json:"total_ballots"`
 	Latest_Block         int    `json:"total_bloc"`
-	Latest_BlockHash     string `json:"total_blocHash"`
+	Latest_BlockHash     string `json:"latest_blocHash"`
 	Latest_TxnHash       string `json:"latest_txnHash"`
 	LatestBlockTimeStamp string `json:"latest_block_stamp"`
 	LatestVoteTimeStamp  string `json:"latest_vote_stamp"`

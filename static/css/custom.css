@@ -13,3 +13,9 @@
     margin-bottom: 15px;
     width: 590px;
 }
+
+.panel-body {
+    /* padding: 15px; */
+    height: 120px;
+    padding-left: 40px;
+}

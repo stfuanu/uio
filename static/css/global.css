@@ -28,12 +28,28 @@ h1, h2, h3, h4, h5, h6 {
 
 .continerinfo {
   padding-right: 15px;
+  position: relative;
   padding-left: 23px;
   margin-right: 55px;
   margin-left: 41px;
-  width: 640px;
+  width: 1438px;
+  height: 140px;
   margin-bottom: 20px;
   margin-top: 20px;
+}
+
+/* #tblocks {
+
+} */
+.continerinfo-right {
+  position: absolute;
+  float: right;
+  box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
+  top: 7px;
+  right: 50px;
+  height: 115px;
+  margin-top: 64px;
+  width: 1060px;
 }
 
 #voterinfo {

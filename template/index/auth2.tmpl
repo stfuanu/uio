@@ -13,6 +13,33 @@
 	</div>
 </div>
 
+<div id= "voterissnfo" class="continerinfo-right">
+	
+	<div class="panel panel-default">
+  		<div class="panel-body">
+    		<h2 id ="tblocks" style="display:inline;">&nbsp&nbsp00</h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			<h2 id ="ttxn" style="display:inline;">00</h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			<h2 id ="tbtx" style="display:inline;">00</h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			<h2 id ="tvtx" style="display:inline;">00</h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="#"><h5 id ="lbh" style="display:inline;">00000c5f427c480a43f4d3e4e5b046b21cc71ca1c509f0731b62a27dfbcdc652</h5></a>
+			<br>
+			<h5 style="display:inline;">Block Height</h5>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			<h5 style="display:inline;">Total TXN's</h5>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			<h5 style="display:inline;">Total Elections</h5>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			<h5 style="display:inline;">Vote Count</h5>&nbsp&nbsp&nbsp&nbsp<a href="#"><h5 id ="lvh" style="display:inline;">00000c5f427c480a43f4d3e4e5b046b21cc71ca1c509f0731b62a27dfbcdc652</h5></a>
+  		</div>
+	</div>
+	<!--
+	<div class="page-header">
+		<h1>DATA idhar</h1>
+		<br>
+			<div class="user-data">
+				<h5>JAJJAJA</h5>
+				<h5>kakskkas </h5>
+			</div>
+	</div>
+	-->
+</div>
+
 
 <div class="continerwalll">
 	<div id="wall" class="continerwall-left">
@@ -93,8 +120,6 @@
 </div>
 
 
-<p> <strong id="livedata">0</strong> </p>
-
 
 <script>
 	document.addEventListener('DOMContentLoaded',function () {
@@ -102,12 +127,17 @@
 	});
 	
 	function startlive() {
-		const place = document.getElementById('livedata');
 		setInterval(function () {
 			fetch('api/live').then(function (response) {
 				return response.json();
 			}).then(function (data) {
-				place.textContent = data.total_blocks;
+				document.getElementById('tblocks').innerHTML = data.total_blocks;
+				document.getElementById('ttxn').innerHTML = data.total_txn;
+				document.getElementById('tbtx').innerHTML = data.total_btx;
+				document.getElementById('tvtx').innerHTML = data.total_vtx;
+				document.getElementById('lbh').innerHTML = data.latest_blocHash;
+				document.getElementById('lvh').innerHTML = data.latest_txnHash;
+
 			}).catch(function (error) {
 				console.log(error);
 			});
