@@ -80,6 +80,51 @@ type AjaxLive struct {
 	LatestVoteTimeStamp  string `json:"latest_vote_stamp"`
 }
 
+type ElectionInfo struct {
+	ThisBallot      Ballot         `json:"ballot"`
+	Candidate_votes map[string]int `json:candyvotes`
+	Total_Votes     int            `json:"tvote"`
+}
+
+var AllElectionLive []ElectionInfo
+
+func GetElectionInfo(btxhash string) ElectionInfo {
+	var ball Ballot
+	// var candyvotes map[string]int
+	candyvotes := make(map[string]int)
+	var tvot int
+	// error : https://yourbasic.org/golang/gotcha-assignment-entry-nil-map/
+
+	for _, Ballott := range Ballots {
+		if Ballott.BTXhash == btxhash {
+			btxhash = Ballott.BTXhash
+			ball = Ballott
+			break
+		}
+	}
+	for _, candy := range ball.Candidates {
+		candyvotes[candy] = 0
+	}
+
+	for _, block := range Blockchain {
+		for _, vtx := range block.Votes {
+			if vtx.Contract == btxhash {
+				tvot++
+				for candyaddress, _ := range candyvotes {
+					if vtx.Candidate == candyaddress {
+						candyvotes[candyaddress] = candyvotes[candyaddress] + 1
+
+					}
+				}
+			}
+		}
+	}
+
+	elinfo := ElectionInfo{ball, candyvotes, tvot}
+
+	return elinfo
+}
+
 var RealLive AjaxLive
 
 func GetLiveStat() {
@@ -97,6 +142,17 @@ func GetLiveStat() {
 
 	// return *livestat
 
+}
+
+func CreateAllElectionInfo() {
+	var btxhash_o string
+
+	for _, ballot := range Ballots {
+		btxhash_o = ballot.BTXhash
+
+		elkinfo := GetElectionInfo(btxhash_o)
+		AllElectionLive = append(AllElectionLive, elkinfo)
+	}
 }
 
 func (stat *AjaxLive) SetVoteStat() {
@@ -143,14 +199,14 @@ func CalContractHash(bb Ballot) string {
 	return hex.EncodeToString(hashed)
 }
 
-func CreateBallot(name string, candies []string) string {
+func CreateBallot(name string, candies []string, start string, end string) string {
 	// []string{"12tmRt6AADfQhfruF3RzFDdNhjiSEkwMvF", "1DngEcP2tCkxZNiAmm3Ar8VXXAAvAPfm8E", "1HRK5H21wFguq5ecJF8FvQk28qYnPz1Qb9"}
 
 	NewBallot := Ballot{
 		ElectionName:    name,
 		Candidates:      candies,
-		StartTimeStamp:  "1635032651",
-		EndTimeStamp:    "1635043569",
+		StartTimeStamp:  start,
+		EndTimeStamp:    end,
 		TotalCandidates: len(candies),
 	}
 	NewBallot.ContractHash = CalContractHash(NewBallot)
@@ -760,6 +816,7 @@ func Addnewblock(voter_pvtkey string, VoteORBallot string, CANDY_ADDRESS string,
 	if latest_Hash == blk_new.Hash {
 		blk_new.UpdateBlockLive()
 		tx.UpdateVoteLive(VoteORBallot) // later would have to change maybe
+		tx.UpdateAllEllinfo(VoteORBallot)
 		return true, nil, latest_Hash
 	} else {
 		return false, fmt.Errorf("Error : Block Not Added to Blockchain "), "NAN"
@@ -786,6 +843,35 @@ func (tx *Vote) UpdateVoteLive(voteorball string) {
 	} else if voteorball == "VOTE" {
 		RealLive.Total_vtx++
 	}
+}
+
+func (tx *Vote) UpdateAllEllinfo(voteorball string) {
+
+	if voteorball == "BALLOT" { // create new electioninfo if it's ballot type (i.e , it's new txn and new ballot)
+		ball, verify := CheckCon(tx.Contract)
+		if !verify {
+			fmt.Println("func: UpdateAllEllinfo , func:CheckCon")
+		}
+
+		var tvot int
+		candyvotes := make(map[string]int)
+		for _, candy := range ball.Candidates {
+			candyvotes[candy] = 0
+		}
+
+		newelk := ElectionInfo{ball, candyvotes, tvot}
+
+		AllElectionLive = append(AllElectionLive, newelk)
+
+	} else if voteorball == "VOTE" { // if vote type Then we just have to update candidateVotes and total votes in this contract/btxhash
+		for _, elk := range AllElectionLive {
+			if elk.ThisBallot.BTXhash == tx.Contract {
+				elk.Candidate_votes[tx.Candidate] = elk.Candidate_votes[tx.Candidate] + 1 // add 1 to vote count of candidate
+				elk.Total_Votes++
+			}
+		}
+	}
+
 }
 
 func CandyExists(candidates []string, cand string) bool {

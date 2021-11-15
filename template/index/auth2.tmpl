@@ -5,11 +5,6 @@
 	<div class="page-header">
 		<h1>Hello, {{.first_name}}</h1>
 		<br>
-			<div class="user-data">
-				<h5>Aadhar Card : 3832 8238 7232</h5>
-				<h5>Phone No. : 7282847118 </h5>
-				<!-- <h5> addrdata : {{.addrinfo}}</h5> -->
-			</div>
 	</div>
 </div>
 
@@ -20,12 +15,12 @@
     		<h2 id ="tblocks" style="display:inline;">&nbsp&nbsp00</h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 			<h2 id ="ttxn" style="display:inline;">00</h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 			<h2 id ="tbtx" style="display:inline;">00</h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-			<h2 id ="tvtx" style="display:inline;">00</h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="#"><h5 id ="lbh" style="display:inline;">00000c5f427c480a43f4d3e4e5b046b21cc71ca1c509f0731b62a27dfbcdc652</h5></a>
+			<h2 id ="tvtx" style="display:inline;">00</h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a id="lbhlink" href="#"><h5 id ="lbh" style="display:inline;">00000c5f427c480a43f4d3e4e5b046b21cc71ca1c509f0731b62a27dfbcdc652</h5></a>
 			<br>
 			<h5 style="display:inline;">Block Height</h5>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 			<h5 style="display:inline;">Total TXN's</h5>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 			<h5 style="display:inline;">Total Elections</h5>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-			<h5 style="display:inline;">Vote Count</h5>&nbsp&nbsp&nbsp&nbsp<a href="#"><h5 id ="lvh" style="display:inline;">00000c5f427c480a43f4d3e4e5b046b21cc71ca1c509f0731b62a27dfbcdc652</h5></a>
+			<h5 style="display:inline;">Vote Count</h5>&nbsp&nbsp&nbsp&nbsp<a id="lvhlink" href="#"><h5 id ="lvh" style="display:inline;">00000c5f427c480a43f4d3e4e5b046b21cc71ca1c509f0731b62a27dfbcdc652</h5></a>
   		</div>
 	</div>
 	<!--
@@ -39,6 +34,7 @@
 	</div>
 	-->
 </div>
+
 
 
 <div class="continerwalll">
@@ -137,6 +133,8 @@
 				document.getElementById('tvtx').innerHTML = data.total_vtx;
 				document.getElementById('lbh').innerHTML = data.latest_blocHash;
 				document.getElementById('lvh').innerHTML = data.latest_txnHash;
+				document.getElementById("lbhlink").href= "/api/vote/".concat(data.latest_blocHash);
+				document.getElementById("lvhlink").href= "/api/vote/".concat(data.latest_blocHash);
 
 			}).catch(function (error) {
 				console.log(error);
@@ -162,7 +160,7 @@
 	</div>
 
 	<div id="column-middle">
-		<p id=ff>Here.... Candidate's Name , Party , Symbol etc..</p>
+		<p id=ff></p>
 	</div>
 
 	<div id="column-right">
@@ -208,6 +206,11 @@
 
 
 <script>
+
+window.onbeforeunload = function(event)
+{
+	window.history.replaceState({}, '','/');
+};
 function showelectioninfo(){
 
 var d = document.getElementById("selectballot");
@@ -219,10 +222,10 @@ const ballots = JSON.parse(jsonstri);
 for (var i = 0; i < ballots.length; i++){
 	var ballot = ballots[i];
 	if (ballot.btxhash.trim() === conhash.trim() ) {
-		document.getElementById("ballconhash").innerHTML = ballot.btxhash;
-		document.getElementById("ballname").innerHTML = ballot.name;
-		document.getElementById("ballstart-end").innerHTML = ballot.start.concat("  -   ",ballot.end);
-		document.getElementById("balltotalcandidates").innerHTML = ballot.totalcandidates;
+		document.getElementById("ballconhash").innerHTML = "<strong>Contract Hash  :</strong>  ".concat(ballot.btxhash);
+		document.getElementById("ballname").innerHTML = "<strong>Election Name  :</strong>  ".concat(ballot.name);
+		document.getElementById("ballstart-end").innerHTML = "<strong>Start - End  :</strong>  ".concat(timeConverter(ballot.start).concat("  ~~~  ",timeConverter(ballot.end)));
+		document.getElementById("balltotalcandidates").innerHTML = "<strong>Candidate Count  :</strong>  ".concat(ballot.totalcandidates);
 		document.getElementById("ballcandidates").innerHTML = ballot.candidates;
 		candies.options[candies.options.length] = new Option("Show Candidates...", "",false,true);
 		for (var i = 0; i < ballot.candidates.length; i++) {

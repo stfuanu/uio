@@ -1,12 +1,223 @@
-{{define "title"}}About{{end}}
+{{define "title"}}BlockVote{{end}}
 {{define "head"}}{{end}}
 {{define "content"}}
-<div class="container">
-	<div class="page-header">
-		<h1>{{template "title" .}}</h1>
-	</div>
-	<p>Live Result update</p>
-	{{template "footer" .}}
+<div id= "voterinfo" class="continerinfo">
 </div>
+
+<div id= "voterissnfo" class="continerinfo-right2">
+	
+	<div class="panel panel-default">
+  		<div class="panel-body2">
+    		<h2 id ="tblocks" style="display:inline;">&nbsp&nbsp00</h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			<h2 id ="ttxn" style="display:inline;">00</h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			<h2 id ="tbtx" style="display:inline;">00</h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			<h2 id ="tvtx" style="display:inline;">00</h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a id="lbhlink" href="#"><h5 id ="lbh" style="display:inline;">00000c5f427c480a43f4d3e4e5b046b21cc71ca1c509f0731b62a27dfbcdc652</h5></a>
+			<br>
+			<h5 style="display:inline;">Block Height</h5>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			<h5 style="display:inline;">Total TXN's</h5>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			<h5 style="display:inline;">Total Elections</h5>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+			<h5 style="display:inline;">Vote Count</h5>&nbsp&nbsp&nbsp&nbsp<a id="lvhlink" href="#"><h5 id ="lvh" style="display:inline;">00000c5f427c480a43f4d3e4e5b046b21cc71ca1c509f0731b62a27dfbcdc652</h5></a>
+  		</div>
+	</div>
+</div>
+
+
+
+
+<div id="container2">
+	<div id= "column-left2">
+		<div class="input-group input-group-lg">
+
+			<select id ="selectballot" onchange="showthiselkinfo();" class="ballform-select" aria-label="Default select example">
+				<option value="" disabled="disabled" selected>  List all Elections... </option>
+			</select>
+			<br>
+			<br>
+			<br>
+			<div id="chartContainerpie">
+ 				<canvas id="myChartpie"  style="width:100%;max-width:400px"></canvas>
+			</div>
+		</div>
+	</div>
+
+	<div id="column-middle2">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-body3">
+					<h2 id ="tvotes" style="display:inline;">&nbsp&nbsp00</h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+					<h2 id ="tcand" style="display:inline;">00</h2>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+					<br>
+					<h5 style="display:inline;">Total Votes</h5>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+					<h5 style="display:inline;">Total Candidates</h5>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+					<br>
+					<br>
+					<a id="linkball" href="#">More Info about this Election Here...</a>
+				
+				</div>
+			</div>
+		</div>
+		<br>
+		<br>
+		<div id="chartContainer">
+ 			<canvas id="myChart"  style="width:100%;max-width:700px"></canvas>
+		</div>
+	</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+
+
+
+
+
+<script>
+
+window.onload = function() {
+  startlive();
+  getballots();
+};
+	
+function startlive() {
+	setInterval(function () {
+		fetch('api/live').then(function (response) {
+			return response.json();
+		}).then(function (data) {
+			document.getElementById('tblocks').innerHTML = data.total_blocks;
+			document.getElementById('ttxn').innerHTML = data.total_txn;
+			document.getElementById('tbtx').innerHTML = data.total_btx;
+			document.getElementById('tvtx').innerHTML = data.total_vtx;
+			document.getElementById('lbh').innerHTML = data.latest_blocHash;
+			document.getElementById('lvh').innerHTML = data.latest_txnHash;
+			document.getElementById("lbhlink").href= "/api/vote/".concat(data.latest_blocHash);
+			document.getElementById("lvhlink").href= "/api/vote/".concat(data.latest_blocHash);
+
+		}).catch(function (error) {
+			console.log(error);
+		});
+
+	}, 1000);
+}
+
+
+
+
+function showthiselkinfo() {
+		var d = document.getElementById("selectballot");
+		let conhash = d.options[d.selectedIndex].value;
+
+		for (var i = 0; i < allellecinfo.length; i++) {
+			thisjsonobj = allellecinfo[i]
+			if (thisjsonobj.ballot.btxhash.trim() === conhash.trim() ) {
+
+				document.getElementById("tvotes").innerHTML = thisjsonobj.tvote
+				document.getElementById("tcand").innerHTML = thisjsonobj.ballot.totalcandidates
+				<!-- document.getElementById("linkball").innerHTML = "https://"+document.domain+"/api/electioninfo/".concat(thisjsonobj.ballot.btxhash) -->
+				document.getElementById("linkball").href= "/api/electioninfo/".concat(thisjsonobj.ballot.btxhash);
+
+				<!-- solved the error : https://stackoverflow.com/a/48508231/14088848 -->
+				document.getElementById("chartContainer").innerHTML = '&nbsp;';
+				document.getElementById("chartContainerpie").innerHTML = '&nbsp;';
+				document.getElementById("chartContainer").innerHTML = '<canvas id="myChart" style="width:100%;max-width:700px"></canvas>';
+				document.getElementById("chartContainerpie").innerHTML = '<canvas id="myChartpie" style="width:100%;max-width:400px"></canvas>';
+				var ctx = document.getElementById("myChart").getContext("2d");
+				var ctxpie = document.getElementById("myChartpie").getContext("2d");
+
+				var colours = [
+				"#b91d47",
+				"#00aba9",
+				"#2b5797",
+				"#e8c3b9",
+				"#1e7145"
+				];
+				let electext = thisjsonobj.ballot.name.concat(" - ",thisjsonobj.ballot.btxhash);
+
+				var xValues = [];
+				var yValues = [];
+				var barColors = [];
+
+				for (var i = 0; i < thisjsonobj.ballot.candidates.length; i++) {
+					xValues[i]= thisjsonobj.ballot.candidates[i];
+					yValues[i] = thisjsonobj.Candidate_votes[xValues[i]]
+					barColors[i] = colours[i]
+
+				}
+
+				
+
+				new Chart("myChartpie", {
+				type: "pie",
+				data: {
+					labels: xValues,
+					datasets: [{
+					backgroundColor: barColors,
+					data: yValues
+					}]
+				},
+				options: {
+					title: {
+					display: false,
+					text: electext
+					}
+				}
+				});
+				new Chart("myChart", {
+				type: "bar",
+				data: {
+					labels: xValues,
+					datasets: [{
+					backgroundColor: barColors,
+					data: yValues
+					}]
+				},
+				options: {
+					title: {
+					display: true,
+					text: electext
+					}
+				}
+				});
+
+			}
+			
+		}
+}
+
+
+var allellecinfo;
+setInterval(function () {
+	fetch('api/electioninfo').then(function (response) {
+		return response.json();
+	}).then(function (data) {
+	allellecinfo = data
+	}).catch(function (error) {
+		console.log(error);
+	});
+
+}, 1000);
+
+function GetElectionInfo() {
+	setInterval(function () {
+		fetch('api/electioninfo').then(function (response) {
+			return response.json();
+		}).then(function (data) {
+			document.getElementById('tblocks').innerHTML = data.total_blocks;
+			document.getElementById('ttxn').innerHTML = data.total_txn;
+			document.getElementById('tbtx').innerHTML = data.total_btx;
+			document.getElementById('tvtx').innerHTML = data.total_vtx;
+			document.getElementById('lbh').innerHTML = data.latest_blocHash;
+			document.getElementById('lvh').innerHTML = data.latest_txnHash;
+
+		}).catch(function (error) {
+			console.log(error);
+		});
+
+	}, 2000);
+}
+
+</script>
+
+
+{{template "footer" .}}
 {{end}}
 {{define "foot"}}{{end}}

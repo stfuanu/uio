@@ -5,7 +5,6 @@
 	<div class="page-header">
 		<h1>{{template "title" .}}</h1>
 	</div>
-	<p>Some description on api's here idk</p>
     <a href="{{.BaseURI}}api/votes.json">GET votes.json</a>
     <br>
     <a href="{{.BaseURI}}api/live">GET Live Statistics</a>
@@ -14,11 +13,166 @@
     <br>
     <a href="{{.BaseURI}}api/vote/00000c149e3398eceaa8a083c4aafdf69571f0396bc80e63d7cd2f853489d528">GET block hash</a>
     <br>
-    <a href="{{.BaseURI}}api/vote/00000c149e3398eceaa8a083c4aafdf69571f0396bc80e63d7cd2f853489d528">idhar txn hash add krna hai</a>
-    <br>
     <a href="{{.BaseURI}}">POST /api/vote/newvtx</a>
     <br>
     <a href="{{.BaseURI}}">POST /api/vote/newbtx</a>
+
+
+
+
+
+
+
+
+
+
+
+    <div id="votesjsonreq"></div>
+    <pre id="votesjosnresp"></pre>
+
+    <div id="balljsonreq"></div>
+    <pre id="balljosnresp"></pre>
+
+    <div id="livereq"></div>
+    <pre id="liveresp"></pre>
+
+    <div id="blockreq"></div>
+    <pre id="blockresp"></pre>
+
+
+    <div id="allelkinforeq"></div>
+    <pre id="allelkinforesp"></pre>
+
+    <div id="allelkinforeq1"></div>
+    <pre id="allelkinforesp1"></pre>
+
+
+
+
+
+
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+        document.getElementById('votesjsonreq').innerHTML =
+        marked.parse('## Getting votes.json \n ```console\n http://localhost/api/votes.json\n```\n ');
+        document.getElementById('votesjosnresp').innerHTML = JSON.stringify([{
+"index": 4,
+"timestamp": "2021-11-09 12:19:14.280329443 +0530 IST",
+"votes": [
+{
+"txhash": "9709e746899c0ea607a198c037d52f0d3034eb2ef3cc65e9f8959ff405a877f3",
+"timestamp": "2021-11-09 12:19:14.279926639 +0530 IST",
+"voter": {
+"address": "1PXoqSUwNmcecekWRWwbEFHZXydGthvjiq",
+"pubkey": "04d8b27f1c5a457615e666c20bc6b84ce5c28c56f5f0e4c2a6ebd77bf6271c8116d17c72502cc79cbbaed987fe8ed873c6ac1c24d1c1898058e6d2bba5707469",
+"signature": "658852c8d9236c5c80c84f7e83221ba5f70b0a9e7e0a010b286035e21403d245ccd7c5c8b487dd9547668f8dc033353c59a8e870715994488a83acfa6944afa9"
+},
+"candidate": "12tmRt6AADfQhfruF3RzFDdNhjiSEkwMvF",
+"status": true,
+"contract": "1ef9129a5373106aa552612761487a032b68556fea269a438e1b33add080ee09"
+}
+],
+"nonce": 1047236,
+"prevhash": "000003625c0476ea02f2e1f9d165cec23d32a949ffdf5254327a4e9400aa7f46",
+"hash": "000008fd8a139df28286ce9f317e797ca2d6df9cd9114ba7d4d62ba631f3a6a9"
+}], null, 4)
+
+        document.getElementById('livereq').innerHTML =
+        marked.parse('## Getting Live Statistics : \n ```console\n http://localhost/api/live\n```\n ');
+        document.getElementById('liveresp').innerHTML = JSON.stringify({
+"total_blocks": 18,
+"total_txn": 18,
+"total_btx": 2,
+"total_vtx": 16,
+"total_ballots": 2,
+"total_bloc": 17,
+"latest_blocHash": "00000f376fe674230a27f6f71583b7308ef6119a1df0619f27caad59b6ecbfe7",
+"latest_txnHash": "9449ef0b1349b58aa3cb9036c7d302175d74ad2ada9988127150c730cd9d30f5",
+"latest_block_stamp": "2021-11-16 02:28:36.900992424 +0530 IST",
+"latest_vote_stamp": "2021-11-16 02:28:36.900804212 +0530 IST"
+}, null, 4)
+
+
+        document.getElementById('blockreq').innerHTML =
+        marked.parse('## Fetching a Specific Block with its Hash : \n ```console\n http://localhost/api/vote/000008fd8a139df28286ce9f317e797ca2d6df9cd9114ba7d4d62ba631f3a6a9\n```\n ');
+        document.getElementById('blockresp').innerHTML = JSON.stringify({
+"index": 4,
+"timestamp": "2021-11-09 12:19:14.280329443 +0530 IST",
+"votes": [
+{
+"txhash": "9709e746899c0ea607a198c037d52f0d3034eb2ef3cc65e9f8959ff405a877f3",
+"timestamp": "2021-11-09 12:19:14.279926639 +0530 IST",
+"voter": {
+"address": "1PXoqSUwNmcecekWRWwbEFHZXydGthvjiq",
+"pubkey": "04d8b27f1c5a457615e666c20bc6b84ce5c28c56f5f0e4c2a6ebd77bf6271c8116d17c72502cc79cbbaed987fe8ed873c6ac1c24d1c1898058e6d2bba5707469",
+"signature": "658852c8d9236c5c80c84f7e83221ba5f70b0a9e7e0a010b286035e21403d245ccd7c5c8b487dd9547668f8dc033353c59a8e870715994488a83acfa6944afa9"
+},
+"candidate": "12tmRt6AADfQhfruF3RzFDdNhjiSEkwMvF",
+"status": true,
+"contract": "1ef9129a5373106aa552612761487a032b68556fea269a438e1b33add080ee09"
+}
+],
+"nonce": 1047236,
+"prevhash": "000003625c0476ea02f2e1f9d165cec23d32a949ffdf5254327a4e9400aa7f46",
+"hash": "000008fd8a139df28286ce9f317e797ca2d6df9cd9114ba7d4d62ba631f3a6a9"
+}, null, 4)
+
+        document.getElementById('allelkinforeq').innerHTML =
+        marked.parse('## All Election Info : \n ```console\n http://localhost/api/electioninfo\n```\n ');
+        document.getElementById('allelkinforesp').innerHTML = JSON.stringify([{
+"ballot": {
+"btxhash": "1ef9129a5373106aa552612761487a032b68556fea269a438e1b33add080ee09",
+"contracthash": "cf261d57c969a3d60c6ca8e2e31d0f812b160bf907f1b1d4052921984150ab1b",
+"name": "BEST_SAMOSA_LOL",
+"candidates": [
+"12tmRt6AADfQhfruF3RzFDdNhjiSEkwMvF",
+"1HRK5H21wFguq5ecJF8FvQk28qYnPz1Qb9",
+"1DngEcP2tCkxZNiAmm3Ar8VXXAAvAPfm8E"
+],
+"totalcandidates": 3,
+"start": "1635032651",
+"end": "1635043569"
+},
+"Candidate_votes": {
+"12tmRt6AADfQhfruF3RzFDdNhjiSEkwMvF": 3,
+"1DngEcP2tCkxZNiAmm3Ar8VXXAAvAPfm8E": 2,
+"1HRK5H21wFguq5ecJF8FvQk28qYnPz1Qb9": 1
+},
+"tvote": 6
+}], null, 4)
+
+
+        document.getElementById('allelkinforeq1').innerHTML =
+        marked.parse('## Specific Info of an Election by its Ballot TXN Hash: \n ```console\n http://localhost/api/electioninfo/573663c88b1b4e938c928f914151348ea4c59bd45f38e4304327193357ba13ab\n```\n ');
+        document.getElementById('allelkinforesp1').innerHTML = JSON.stringify({
+"ballot": {
+"btxhash": "573663c88b1b4e938c928f914151348ea4c59bd45f38e4304327193357ba13ab",
+"contracthash": "ba56265934aa02b8ade28fd720119f627e8c51a08bec77f143cf4731b1b9697a",
+"name": "BEST_COOK_2069",
+"candidates": [
+"12tmRt6AADfQhfruF3RzFDdNhjiSEkwMvF",
+"1HRK5H21wFguq5ecJF8FvQk28qYnPz1Qb9",
+"1DngEcP2tCkxZNiAmm3Ar8VXXAAvAPfm8E"
+],
+"totalcandidates": 3,
+"start": "1635032651",
+"end": "1635043569"
+},
+"Candidate_votes": {
+"12tmRt6AADfQhfruF3RzFDdNhjiSEkwMvF": 7,
+"1DngEcP2tCkxZNiAmm3Ar8VXXAAvAPfm8E": 0,
+"1HRK5H21wFguq5ecJF8FvQk28qYnPz1Qb9": 2
+},
+"tvote": 9
+}, null, 4)
+
+
+
+    </script>
+
+
 	{{template "footer" .}}
 </div>
 {{end}}

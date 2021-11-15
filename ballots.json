@@ -24,5 +24,20 @@
   "totalcandidates": 3,
   "start": "1635032651",
   "end": "1635043569"
+ },
+ {
+  "btxhash": "7a36c6804ad5b18f6ac6c83d1f70ac1d6414ffffda6b081cf202f269003757bc",
+  "contracthash": "aa36c735dce97f517b364b586e1b5956b8431f0392441704f8e3a77a9e69c6f4",
+  "name": "General-Elections-2023",
+  "candidates": [
+   "1A3hszZSQ3X3uTKM4vBApsmdAzVb1JNesQ",
+   "17hK9XqZr8K9mMV9BS4BPbEB7VAGYxkmVV",
+   "1P2wWctGp3YdaRXviVrjEc8Yy1Gm29e3zt",
+   "1KPFGEbdDQJUTFG3JBth9rytNutSpk2WYH",
+   "14GyPW5CZhz1PtMV9CgwCEBquXyPnr1pRK"
+  ],
+  "totalcandidates": 5,
+  "start": "1637016673",
+  "end": "1611681673"
  }
 ]

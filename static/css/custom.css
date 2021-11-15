@@ -17,5 +17,23 @@
 .panel-body {
     /* padding: 15px; */
     height: 120px;
-    padding-left: 40px;
+    padding-left: 20px;
 }
+
+.panel-body2 {
+    /* padding: 15px; */
+    height: 100px;
+    padding-left: 70px;
+    padding-top: 12px;
+}
+.panel-body3 {
+    /* padding: 15px; */
+    height: 100px;
+    padding-left: 70px;
+    padding-top: 12px;
+    width: 363px;
+}
+
+/* text on hover css code  */
+
+/* https://stackoverflow.com/questions/65796587/display-text-on-hover */

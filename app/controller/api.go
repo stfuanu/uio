@@ -43,6 +43,13 @@ func APIGET(w http.ResponseWriter, r *http.Request) {
 	v.Render(w)
 }
 
+func LiveGet(w http.ResponseWriter, r *http.Request) {
+	// Display the view
+	v := view.New(r)
+	v.Name = "result/live"
+	v.Render(w)
+}
+
 func GetBlockchain(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
@@ -76,6 +83,91 @@ func GetBallots(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	io.WriteString(w, string(bb))
+}
+
+func GetElectionInfoWeb(w http.ResponseWriter, r *http.Request) {
+
+	var params httprouter.Params
+	params = context.Get(r, "params").(httprouter.Params)
+	Hashy := params.ByName("btxhash")
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	// reqhash := mux.Vars(r)
+	// fmt.Println(reqhash)
+
+	// for _, block := range core.Blockchain {
+	// 	if block.Hash == Hashy {
+
+	elkinfo := core.GetElectionInfo(Hashy)
+	blk, err := json.MarshalIndent(elkinfo, "", "  ")
+	fmt.Println(string(blk))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	io.WriteString(w, string(blk))
+
+	// }
+	// }
+
+}
+
+func GetElectionInfoWeb_Fast(w http.ResponseWriter, r *http.Request) {
+
+	var params httprouter.Params
+	params = context.Get(r, "params").(httprouter.Params)
+	Hashy := params.ByName("btxhash")
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	// reqhash := mux.Vars(r)
+	// fmt.Println(reqhash)
+	var elkinfo core.ElectionInfo
+
+	for _, ell := range core.AllElectionLive {
+		if ell.ThisBallot.BTXhash == Hashy {
+			elkinfo = ell
+			break
+
+		}
+	}
+	// 	if block.Hash == Hashy {
+
+	// elkinfo := core.GetElectionInfo(Hashy)
+	blk, err := json.MarshalIndent(elkinfo, "", "  ")
+	fmt.Println(string(blk))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	io.WriteString(w, string(blk))
+
+	// }
+	// }
+
+}
+
+func GetALLElectionInfoWeb(w http.ResponseWriter, r *http.Request) {
+
+	// var params httprouter.Params
+	// params = context.Get(r, "params").(httprouter.Params)
+	// Hashy := params.ByName("btxhash")
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	// reqhash := mux.Vars(r)
+	// fmt.Println(reqhash)
+
+	blk, err := json.MarshalIndent(core.AllElectionLive, "", "  ")
+	// fmt.Println(string(blk))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	io.WriteString(w, string(blk))
+
 }
 
 func GetBlock(w http.ResponseWriter, r *http.Request) {

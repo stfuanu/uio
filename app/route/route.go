@@ -86,6 +86,10 @@ func routes() *httprouter.Router {
 		New().
 		ThenFunc(controller.APIGET)))
 
+	r.GET("/live", hr.Handler(alice.
+		New().
+		ThenFunc(controller.LiveGet)))
+
 	r.GET("/api/live", hr.Handler(alice.
 		New().
 		ThenFunc(controller.LiveStat)))
@@ -100,6 +104,14 @@ func routes() *httprouter.Router {
 	r.GET("/api/vote/:hash", hr.Handler(alice.
 		New().
 		ThenFunc(controller.GetBlock)))
+
+	r.GET("/api/electioninfo/:btxhash", hr.Handler(alice.
+		New().
+		// ThenFunc(controller.GetElectionInfoWeb)))
+		ThenFunc(controller.GetElectionInfoWeb_Fast)))
+	r.GET("/api/electioninfo", hr.Handler(alice.
+		New().
+		ThenFunc(controller.GetALLElectionInfoWeb)))
 
 	r.POST("/vote/newvtx", hr.Handler(alice.
 		New().

@@ -52,6 +52,17 @@ h1, h2, h3, h4, h5, h6 {
   width: 1060px;
 }
 
+.continerinfo-right2 {
+  position: absolute;
+  float: right;
+  box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
+  top: 7px;
+  right: 50px;
+  height: 115px;
+  margin-top: 64px;
+  width: 1430px;
+}
+
 #voterinfo {
   box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
 }
@@ -151,7 +162,7 @@ h1, h2, h3, h4, h5, h6 {
   width:368px;
   height:260px;
   margin-left:20px;
-  box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
+  /* box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%); */
 }
 
 #column-right {
@@ -162,6 +173,36 @@ h1, h2, h3, h4, h5, h6 {
 	right: 10px;
 	bottom: 10px;
   height: 150px;
-	width: 300px;
+	width: 510px;
   margin-right: 210px;
+}
+
+/* for live  */
+
+#container2 {
+	position: relative;
+  height: 609px;
+  padding-right: 35px;
+  padding-left: 23px;
+  box-shadow: 1px 1px 4px 0 rgb(0 0 0 / 10%);
+  margin-right: 55px;
+  margin-left: 41px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+#column-left2 {
+	width: 550px;
+  float:left;
+  height: 595px;
+  padding-left: 73px;
+  box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
+}
+
+#column-middle2 {
+  float:left;
+  width:768px;
+  height:595px;
+  margin-left:10px;
+  box-shadow: 0 0 4px 0 rgb(0 0 0 / 10%);
 }

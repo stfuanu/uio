@@ -23,6 +23,46 @@ function hideFlash(rnum)
     }, 4000);
 }
 
+function getballots() {
+    var ballotselect = document.getElementById("selectballot");
+    fetch('api/electioninfo').then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        var options = document.querySelectorAll('#selectballot option');
+        options.forEach(o => o.remove());
+        // document.getElementById('ff').innerHTML = data[0].btxhash
+        ballotselect.options[ballotselect.options.length] = new Option("  List all Elections... ", "",true,false);
+        for (var i = 0; i < data.length; i++) {
+            thisjsonobj = data[i]
+            ballotselect.options[ballotselect.options.length] = new Option(thisjsonobj.ballot.name, thisjsonobj.ballot.btxhash,false,false);
+        }
+
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
+
+// function oneballotdata() {
+// 	setInterval(function () {
+// 		var d = document.getElementById("selectballot");
+// 		let conhash = d.options[d.selectedIndex].value;
+
+// 		var uri = "api/electioninfo/".concat(conhash)
+
+// 		fetch(uri).then(function (response) {
+// 			return response.json();
+// 		}).then(function (data) {
+
+// 		document.getElementById("tvotes").innerHTML = data.tvote
+// 		document.getElementById("tcand").innerHTML = data.ballot.totalcandidates
+
+// 		}).catch(function (error) {
+// 			console.log(error);
+// 		});
+
+// 	}, 1000);
+// }
+
 function showFlash(obj)
 {
     $('#flash-container').html();
@@ -179,6 +219,19 @@ function CopyClip() {
     document.execCommand('copy');
     
 }
+
+function timeConverter(UNIX_timestamp){
+    var a = new Date(UNIX_timestamp * 1000);
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    var sec = a.getSeconds();
+    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+    return time;
+  }
 
 // function copyToClipboard(text) {
 

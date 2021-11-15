@@ -31,7 +31,7 @@ func GenerateWallet(w http.ResponseWriter, r *http.Request) {
 		// Display the same page
 		//
 		IndexGET(w, r)
-		http.Redirect(w, r, "/", http.StatusFound)
+		// http.Redirect(w, r, "/", http.StatusFound)
 
 	} else if buttoName == "FIND_ADDRESS" {
 
@@ -57,7 +57,7 @@ func GenerateWallet(w http.ResponseWriter, r *http.Request) {
 		// Display the same page
 		//
 		IndexGET(w, r)
-		http.Redirect(w, r, "/", http.StatusFound)
+		// http.Redirect(w, r, "/", http.StatusFound)
 
 	}
 

@@ -1,0 +1,2 @@
+timestamp:can't vote after before time !!
+btx admin panel (do if possible)
