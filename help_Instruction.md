@@ -2,7 +2,7 @@
 
 
 1). Install GoLang 1.16+ , 
-2).setup local mysql server with dbname=auth & tablename=user 
+2).setup local mysql server with dbname=auth & tablename=user at port 3306
 
 ```console
 mysql> use auth;
