@@ -11,17 +11,19 @@
     <br>
     <a href="{{.BaseURI}}api/ballots.json">GET ballots.json</a>
     <br>
-    <a href="{{.BaseURI}}api/vote/00000c149e3398eceaa8a083c4aafdf69571f0396bc80e63d7cd2f853489d528">GET block hash</a>
+    <a href="{{.BaseURI}}api/vote/00000c149e3398eceaa8a083c4aafdf69571f0396bc80e63d7cd2f853489d528">GET a Specific block by it's hash</a>
     <br>
-    <a href="{{.BaseURI}}">POST /api/vote/newvtx</a>
+        <a href="{{.BaseURI}}api/addrinfo/14sNixMpyH2L1KQNaudxJm2CakhYgYEDtJ">GET All Information about an address</a>
     <br>
-    <a href="{{.BaseURI}}">POST /api/vote/newbtx</a>
-
-
-
-
-
-
+        <a href="{{.BaseURI}}api/electioninfo">GET All Information about All Elections</a>
+    <br>
+        <a href="{{.BaseURI}}api/live">GET Live Statistics about Blockchain</a>
+    <br>
+        <a href="{{.BaseURI}}api/electioninfo/573663c88b1b4e938c928f914151348ea4c59bd45f38e4304327193357ba13ab">GET Information about a Specific Election by it's btxhash</a>
+    <br>
+    <a href="{{.BaseURI}}api">POST /api/vote/newvtx , Create New Vote ..Block</a>
+    <br>
+    <a href="{{.BaseURI}}api">POST /api/vote/newbtx , Create New Election/Ballot ..Block</a>
 
 
 
@@ -33,18 +35,26 @@
     <div id="balljsonreq"></div>
     <pre id="balljosnresp"></pre>
 
+    <div id="addrinforeq"></div>
+    <pre id="addrinforesp"></pre>
+
     <div id="livereq"></div>
     <pre id="liveresp"></pre>
 
     <div id="blockreq"></div>
     <pre id="blockresp"></pre>
 
+    <div id="ballotsjsonreq"></div>
+    <pre id="ballotsjosnresp"></pre>
 
     <div id="allelkinforeq"></div>
     <pre id="allelkinforesp"></pre>
 
     <div id="allelkinforeq1"></div>
     <pre id="allelkinforesp1"></pre>
+
+    <div id="postbtxreq"></div>
+    <pre id="postbtxresp"></pre>
 
 
 
@@ -79,6 +89,41 @@
 "hash": "000008fd8a139df28286ce9f317e797ca2d6df9cd9114ba7d4d62ba631f3a6a9"
 }], null, 4)
 
+
+        document.getElementById('ballotsjsonreq').innerHTML =
+        marked.parse('## Getting Ballots.json \n ```console\n http://localhost/api/ballots.json\n```\n ');
+        document.getElementById('ballotsjosnresp').innerHTML = JSON.stringify([{
+"btxhash": "7a36c6804ad5b18f6ac6c83d1f70ac1d6414ffffda6b081cf202f269003757bc",
+"contracthash": "aa36c735dce97f517b364b586e1b5956b8431f0392441704f8e3a77a9e69c6f4",
+"name": "General-Elections-2023",
+"candidates": [
+"1A3hszZSQ3X3uTKM4vBApsmdAzVb1JNesQ",
+"17hK9XqZr8K9mMV9BS4BPbEB7VAGYxkmVV",
+"1P2wWctGp3YdaRXviVrjEc8Yy1Gm29e3zt",
+"1KPFGEbdDQJUTFG3JBth9rytNutSpk2WYH",
+"14GyPW5CZhz1PtMV9CgwCEBquXyPnr1pRK"
+],
+"totalcandidates": 5,
+"start": "1637016673",
+"end": "1611681673"
+},
+{
+"btxhash": "a2f46789fc1fcb44743449b5b21125b567c3e7e2eb56e343050d346e2c970649",
+"contracthash": "876ad95b234f7978f830acadf676ea3b4665e85697c89c3086fa76c406b05318",
+"name": "General-Elections-2021",
+"candidates": [
+"1A3hszZSQ3X3uTKM4vBApsmdAzVb1JNesQ",
+"17hK9XqZr8K9mMV9BS4BPbEB7VAGYxkmVV",
+"1P2wWctGp3YdaRXviVrjEc8Yy1Gm29e3zt",
+"1KPFGEbdDQJUTFG3JBth9rytNutSpk2WYH",
+"14GyPW5CZhz1PtMV9CgwCEBquXyPnr1pRK"
+],
+"totalcandidates": 5,
+"start": "1637016673",
+"end": "1643216020"
+}
+], null, 4)
+
         document.getElementById('livereq').innerHTML =
         marked.parse('## Getting Live Statistics : \n ```console\n http://localhost/api/live\n```\n ');
         document.getElementById('liveresp').innerHTML = JSON.stringify({
@@ -92,6 +137,46 @@
 "latest_txnHash": "9449ef0b1349b58aa3cb9036c7d302175d74ad2ada9988127150c730cd9d30f5",
 "latest_block_stamp": "2021-11-16 02:28:36.900992424 +0530 IST",
 "latest_vote_stamp": "2021-11-16 02:28:36.900804212 +0530 IST"
+}, null, 4)
+
+
+        document.getElementById('postbtxreq').innerHTML =
+        marked.parse('## Creating New Ballot/Election : \n ```console\n POST http://localhost/api/vote/newbtx\n```\n Currently deprecated ');
+        document.getElementById('postbtxresp').innerHTML = JSON.stringify({}, null, 4)
+
+        document.getElementById('addrinforeq').innerHTML =
+        marked.parse('## GET All Information about an Address : \n ```console\n http://localhost/api/addrinfo/14sNixMpyH2L1KQNaudxJm2CakhYgYEDtJ\n```\n ');
+        document.getElementById('addrinforesp').innerHTML = JSON.stringify({
+"AsVoter_VtxID": [
+{
+"txhash": "f6a66992e0d7a9768d270605bcc6cff6ab82d3eea47c2cab21eb733a47d6cac3",
+"timestamp": "2021-11-11 12:23:36.188943849 +0530 IST",
+"voter": {
+"address": "14sNixMpyH2L1KQNaudxJm2CakhYgYEDtJ",
+"pubkey": "a91cb9293cd60fc899e52e582c53f3be7810e0d4d174cf054f8a117ea989e4c362d5a886b97f996a11536fd86f22a600ce99260f443fb73bea15c8257065f818",
+"signature": "a88dd29dabd76769868392b88339d676578eca216a333346ac308dd3d2bd56105432c02112727c836d880578bbdd5266a20d5cbb58ddf6315f463823a1269d0e"
+},
+"candidate": "1HRK5H21wFguq5ecJF8FvQk28qYnPz1Qb9",
+"status": true,
+"contract": "573663c88b1b4e938c928f914151348ea4c59bd45f38e4304327193357ba13ab"
+}
+],
+"AsCandidate_VtxID": null,
+"Ballot_BtxID": [
+{
+"txhash": "7a36c6804ad5b18f6ac6c83d1f70ac1d6414ffffda6b081cf202f269003757bc",
+"timestamp": "2021-11-16 04:23:14.864399942 +0530 IST",
+"voter": {
+"address": "14sNixMpyH2L1KQNaudxJm2CakhYgYEDtJ",
+"pubkey": "a91cb9293cd60fc899e52e582c53f3be7810e0d4d174cf054f8a117ea989e4c362d5a886b97f996a11536fd86f22a600ce99260f443fb73bea15c8257065f818",
+"signature": "ed9bcc468c84e2c723a0200b45f28437c57c6d5296ea9c0d3725467af2363fd8d67e1ed1fcee47dc41a9785d41555370be41b8c58f9216fb3476cc2974a71b33"
+},
+"candidate": "SMART_CONTRACT",
+"status": true,
+"contract": "HpavdDrG39aynuZNUKhPquNGQyAwg7kVhSWvJxcUMcKHsL9xxJa2f6vpZMXddSbgPRnnAE4y7AZTncVne81Z6xzXnaLF8NXEMTjX5i2TPviMksbRTG3H2vEUZU4yCUumvEV75fvit9RLg6otHFqzkcPC81LyNrV1yComos3mcMGwsDcTz1Hh4pFKBY493KJP3DdDpkcn9aXw18Wb8P72X27e8umvHsRpNimRprCXjLnXVnmCCEnmJrsbhy72Mep22sAMM5zeaFYDHkHNtnwgDhipKF3FxBBVhybG7kHFXhUZ8n5VpyxuP12NeFnAzTaThP6stsgBMXhazkShdje6jvVe21a1MscfSsPKPfpHsHHPTxdepkMpD9qTY4R56DsM4KyTSC47J1FZdpCqcbXTywdzs39i3WKeRYCPX7QMZxgB5kABue4FpFhEh4qhc8cKxgWhm6rzVyuo4pgXWLCGwKopNQ4mfq8YfSQmVPK1qG2fxWhumM4LL4PsggiRVudnWzaXMqTWujvZPeBnJp"
+}
+],
+"NumofTxns": 2
 }, null, 4)
 
 

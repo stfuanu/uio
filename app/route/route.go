@@ -129,7 +129,7 @@ func routes() *httprouter.Router {
 		ThenFunc(controller.NewVote)))
 
 	r.POST("/api/vote/newbtx", hr.Handler(alice.
-		New(acl.DisallowAuth).
+		New().
 		ThenFunc(controller.NewBallot)))
 
 	r.POST("/generate", hr.Handler(alice.

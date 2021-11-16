@@ -1,47 +1,19 @@
 [
  {
-  "btxhash": "573663c88b1b4e938c928f914151348ea4c59bd45f38e4304327193357ba13ab",
-  "contracthash": "ba56265934aa02b8ade28fd720119f627e8c51a08bec77f143cf4731b1b9697a",
-  "name": "BEST_COOK_2069",
+  "btxhash": "66dc1f74826caa789fdbf12efc4d5155755436ec12bada48ea5d490b6cb5e069",
+  "contracthash": "f0cf27d8b5ad33e18a04304da5a74435836703a67e8d2b6d3d300aac8db3fd1a",
+  "name": "Best-Cook-360",
   "candidates": [
-   "12tmRt6AADfQhfruF3RzFDdNhjiSEkwMvF",
-   "1HRK5H21wFguq5ecJF8FvQk28qYnPz1Qb9",
-   "1DngEcP2tCkxZNiAmm3Ar8VXXAAvAPfm8E"
+   "1CFnyjZSqUmb4J9RVrE92YtV5VhWV2Lvfo",
+   "1LbPQ1EhzjBC9ZFB8UVUdjgjUAeNM4q5zX",
+   "1GgKb5kg3DpPy2Q3APrijivxgKDggsd86N"
   ],
   "totalcandidates": 3,
-  "start": "1635032651",
-  "end": "1635043569"
- },
- {
-  "btxhash": "1ef9129a5373106aa552612761487a032b68556fea269a438e1b33add080ee09",
-  "contracthash": "cf261d57c969a3d60c6ca8e2e31d0f812b160bf907f1b1d4052921984150ab1b",
-  "name": "BEST_SAMOSA_LOL",
-  "candidates": [
-   "12tmRt6AADfQhfruF3RzFDdNhjiSEkwMvF",
-   "1HRK5H21wFguq5ecJF8FvQk28qYnPz1Qb9",
-   "1DngEcP2tCkxZNiAmm3Ar8VXXAAvAPfm8E"
-  ],
-  "totalcandidates": 3,
-  "start": "1635032651",
-  "end": "1635043569"
- },
- {
-  "btxhash": "7a36c6804ad5b18f6ac6c83d1f70ac1d6414ffffda6b081cf202f269003757bc",
-  "contracthash": "aa36c735dce97f517b364b586e1b5956b8431f0392441704f8e3a77a9e69c6f4",
-  "name": "General-Elections-2023",
-  "candidates": [
-   "1A3hszZSQ3X3uTKM4vBApsmdAzVb1JNesQ",
-   "17hK9XqZr8K9mMV9BS4BPbEB7VAGYxkmVV",
-   "1P2wWctGp3YdaRXviVrjEc8Yy1Gm29e3zt",
-   "1KPFGEbdDQJUTFG3JBth9rytNutSpk2WYH",
-   "14GyPW5CZhz1PtMV9CgwCEBquXyPnr1pRK"
-  ],
-  "totalcandidates": 5,
   "start": "1637016673",
-  "end": "1611681673"
+  "end": "1647212020"
  },
  {
-  "btxhash": "a2f46789fc1fcb44743449b5b21125b567c3e7e2eb56e343050d346e2c970649",
+  "btxhash": "248479dfc3eefa8ca159738927a91dc172d3ec77776ee4f983479dbe43013ff4",
   "contracthash": "876ad95b234f7978f830acadf676ea3b4665e85697c89c3086fa76c406b05318",
   "name": "General-Elections-2021",
   "candidates": [

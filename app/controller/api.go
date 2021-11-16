@@ -21,12 +21,20 @@ import (
 type Jsondata struct {
 	Voter     string `json:"voter"`
 	Candidate string `json:"candidate"`
-	contra    string `json:"contract"`
+	Contra    string `json:"contract"`
 }
 
 type BallData struct {
-	Voter  string `json:"voter"`
-	contra string `json:"contract"` // candidate to default hi rahega na
+	Voterpvtkey string     `json:"voter"`
+	Contra      string     `json:"contract"` // candidate to default hi rahega na
+	Createdata  Jsonballot `json:"jsonballot"`
+}
+
+type Jsonballot struct {
+	Name       string   `json:"naam"`
+	Candidates []string `json:"candidates"`
+	Start      string   `json:"start"`
+	End        string   `json:"start"`
 }
 
 type ResponseToVoter struct {
@@ -257,7 +265,7 @@ func NewVote(w http.ResponseWriter, r *http.Request) {
 		// }
 
 		// New Block --->
-		addedORnot, err, hashifany := core.Addnewblock("VOTE", newvote.Voter, newvote.Candidate, newvote.contra)
+		addedORnot, err, hashifany := core.Addnewblock("VOTE", newvote.Voter, newvote.Candidate, newvote.Contra)
 
 		if addedORnot && err == nil {
 			// fmt.Println("sukcess" , hashifany)
@@ -329,7 +337,9 @@ func NewBallot(w http.ResponseWriter, r *http.Request) {
 		}
 		// jsonString, _ := json.Marshal(NewBallot)
 
-		addedORnot, err, hashifany := core.Addnewblock("BALLOT", NewBallot.Voter, "SMART_CONTRACT", NewBallot.contra)
+		addedORnot, err, hashifany := core.Addnewblock(NewBallot.Voterpvtkey, "BALLOT", "SMART_CONTRACT", core.CreateBallot(NewBallot.Createdata.Name, NewBallot.Createdata.Candidates, NewBallot.Createdata.Start, NewBallot.Createdata.End))
+		// core.CreateBallot("General-Elections-2021", []string{"1A3hszZSQ3X3uTKM4vBApsmdAzVb1JNesQ", "17hK9XqZr8K9mMV9BS4BPbEB7VAGYxkmVV"}, "1637016673", "1643216020")
+		// core.Addnewblock("140edf6c44171ab7c93cb2df9da9cb56d253757c4b16badfde6cdfba86514b", "BALLOT", "", core.CreateBallot("General-Elections-2021", []string{"1A3hszZSQ3X3uTKM4vBApsmdAzVb1JNesQ", "17hK9XqZr8K9mMV9BS4BPbEB7VAGYxkmVV", "1P2wWctGp3YdaRXviVrjEc8Yy1Gm29e3zt", "1KPFGEbdDQJUTFG3JBth9rytNutSpk2WYH", "14GyPW5CZhz1PtMV9CgwCEBquXyPnr1pRK"}, "1637016673", "1643216020"))
 
 		if addedORnot && err == nil {
 			io.WriteString(w, WhatHappened(http.StatusOK, "Success", hashifany))
