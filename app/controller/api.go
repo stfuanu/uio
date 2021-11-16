@@ -85,6 +85,31 @@ func GetBallots(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, string(bb))
 }
 
+func Getaddrinfo(w http.ResponseWriter, r *http.Request) {
+
+	var params httprouter.Params
+	params = context.Get(r, "params").(httprouter.Params)
+	Hashy := params.ByName("addr")
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	// reqhash := mux.Vars(r)
+	// fmt.Println(reqhash)
+
+	// for _, block := range core.Blockchain {
+	// 	if block.Hash == Hashy {
+
+	addrinfoo := core.GetAllInfoByAddr(Hashy)
+	blk, err := json.MarshalIndent(addrinfoo, "", "  ")
+	// fmt.Println(string(blk))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	io.WriteString(w, string(blk))
+
+}
+
 func GetElectionInfoWeb(w http.ResponseWriter, r *http.Request) {
 
 	var params httprouter.Params
@@ -101,7 +126,7 @@ func GetElectionInfoWeb(w http.ResponseWriter, r *http.Request) {
 
 	elkinfo := core.GetElectionInfo(Hashy)
 	blk, err := json.MarshalIndent(elkinfo, "", "  ")
-	fmt.Println(string(blk))
+	// fmt.Println(string(blk))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -136,7 +161,7 @@ func GetElectionInfoWeb_Fast(w http.ResponseWriter, r *http.Request) {
 
 	// elkinfo := core.GetElectionInfo(Hashy)
 	blk, err := json.MarshalIndent(elkinfo, "", "  ")
-	fmt.Println(string(blk))
+	// fmt.Println(string(blk))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

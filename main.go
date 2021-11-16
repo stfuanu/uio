@@ -66,7 +66,7 @@ func main() {
 		recaptcha.Plugin())
 
 	// Test :
-
+	_, _, _ = core.Addnewblock("140edf6c44171ab7c93cb2df9da9cb56d253757c4b16badfde6cdfba86514b", "BALLOT", "", core.CreateBallot("General-Elections-2021", []string{"1A3hszZSQ3X3uTKM4vBApsmdAzVb1JNesQ", "17hK9XqZr8K9mMV9BS4BPbEB7VAGYxkmVV", "1P2wWctGp3YdaRXviVrjEc8Yy1Gm29e3zt", "1KPFGEbdDQJUTFG3JBth9rytNutSpk2WYH", "14GyPW5CZhz1PtMV9CgwCEBquXyPnr1pRK"}, "1637016673", "1643216020"))
 	// _, _, _ = core.Addnewblock("140edf6c44171ab7c93cb2df9da9cb56d253757c4b16badfde6cdfba86514b", "BALLOT", "", core.CreateBallot("General-Elections-2023", []string{"1A3hszZSQ3X3uTKM4vBApsmdAzVb1JNesQ", "17hK9XqZr8K9mMV9BS4BPbEB7VAGYxkmVV", "1P2wWctGp3YdaRXviVrjEc8Yy1Gm29e3zt", "1KPFGEbdDQJUTFG3JBth9rytNutSpk2WYH", "14GyPW5CZhz1PtMV9CgwCEBquXyPnr1pRK"}, "1637016673", "1611681673"))
 
 	//1. Address : 1A3hszZSQ3X3uTKM4vBApsmdAzVb1JNesQ , 29652bac6f13a7c2f77a77d9e0c6bd185b45aaab4541034c81281f8f9080f8fa

@@ -68,7 +68,7 @@ func GetAllInfoByAddr(address string) AddrInfo {
 
 	for _, block := range Blockchain {
 		for _, vtx := range block.Votes {
-			if vtx.Voter.Address == address {
+			if vtx.Voter.Address == address && vtx.Candidate != "SMART_CONTRACT" {
 				voteslice = append(voteslice, vtx)
 				ttxn++
 			} else if vtx.Voter.Address == address && vtx.Candidate == "SMART_CONTRACT" {

@@ -39,5 +39,20 @@
   "totalcandidates": 5,
   "start": "1637016673",
   "end": "1611681673"
+ },
+ {
+  "btxhash": "a2f46789fc1fcb44743449b5b21125b567c3e7e2eb56e343050d346e2c970649",
+  "contracthash": "876ad95b234f7978f830acadf676ea3b4665e85697c89c3086fa76c406b05318",
+  "name": "General-Elections-2021",
+  "candidates": [
+   "1A3hszZSQ3X3uTKM4vBApsmdAzVb1JNesQ",
+   "17hK9XqZr8K9mMV9BS4BPbEB7VAGYxkmVV",
+   "1P2wWctGp3YdaRXviVrjEc8Yy1Gm29e3zt",
+   "1KPFGEbdDQJUTFG3JBth9rytNutSpk2WYH",
+   "14GyPW5CZhz1PtMV9CgwCEBquXyPnr1pRK"
+  ],
+  "totalcandidates": 5,
+  "start": "1637016673",
+  "end": "1643216020"
  }
 ]

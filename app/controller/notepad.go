@@ -25,7 +25,7 @@ func GenerateWallet(w http.ResponseWriter, r *http.Request) {
 		NEW_WALLET = core.MakeWallet()
 		sess.AddFlash(view.Flash{"New Wallet Created! : " + NEW_WALLET.Real.Address, view.FlashSuccess})
 		sess.Values["wallet"] = NEW_WALLET
-		sess.Values["addrinfo"] = core.GetAllInfoByAddr(NEW_WALLET.Real.Address)
+		// sess.Values["addrinfo"] = core.GetAllInfoByAddr(NEW_WALLET.Real.Address)
 		sess.Save(r, w)
 
 		// Display the same page
@@ -51,7 +51,7 @@ func GenerateWallet(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		sess.Values["wallet"] = NEW_WALLET
-		sess.Values["addrinfo"] = core.GetAllInfoByAddr(NEW_WALLET.Real.Address)
+		// sess.Values["addrinfo"] = core.GetAllInfoByAddr(NEW_WALLET.Real.Address)
 		sess.Save(r, w)
 
 		// Display the same page

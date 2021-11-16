@@ -64,35 +64,26 @@
 					<li class="nav-item"><a class="nav-link active" id="voter-tab" data-toggle="tab" href="#voter" role="tab" aria-controls="voter" aria-selected="true">Voter</a></li>
 					<li class="nav-item"><a class="nav-link" id="candidate-tab" data-toggle="tab" href="#candidate" role="tab" aria-controls="candidate" aria-selected="false">Candidate</a></li>
 					<li class="nav-item"><a class="nav-link" id="ballot-tab" data-toggle="tab" href="#ballot" role="tab" aria-controls="ballot" aria-selected="false">Ballot</a></li>
-					<li class="nav-item"><a href="#"> Total TXN's <span class="badge">{{.addrinfo.NumofTxns}}</span></a></li>
+					<li class="nav-item"><a href="#"> Total TXN's <span id="badgeaddr" class="badge">0</span></a></li>
 				</ul>
 			</div>
 			<div class="card-body" id="card">
 				<div class="tab-content" id="myTabContent">
 					<div class="tab-pane active" id="voter" role="tabpanel" aria-labelledby="voter-tab">
 						<div class="panel panel-default">
-							<div class="list-group">
-								{{range .addrinfo.AsVoter_VtxID}}
-  								<a href="#" class="list-group-item list-group-item-success">{{.TXID}}</a>
-								{{end}}
+							<div class="list-groupvoter">
 							</div>
 						</div>
 					</div>
 					<div class="tab-pane" id="candidate" role="tabpanel" aria-labelledby="candidate-tab">
 						<div class="panel panel-default">
-							<div class="list-group">
-								{{range .addrinfo.AsCandidate_VtxID}}
-  								<a href="#" class="list-group-item list-group-item-success">{{.TXID}}</a>
-								{{end}}
+							<div class="list-groupcandy">
 							</div>
 						</div>
 					</div>
 					<div class="tab-pane" id="ballot" role="tabpanel" aria-labelledby="ballot-tab">
 						<div class="panel panel-default">
-							<div class="list-group">
-								{{range .addrinfo.Ballot_BtxID}}
-  								<a href="#" class="list-group-item list-group-item-success">{{.TXID}}</a>
-								{{end}}
+							<div class="list-groupball">
 							</div>
 						</div>
 					</div>
@@ -120,6 +111,8 @@
 <script>
 	document.addEventListener('DOMContentLoaded',function () {
 		startlive();
+		Getaddrinfoo();
+		window.history.pushState('', '', '/');
 	});
 	
 	function startlive() {
@@ -175,6 +168,8 @@
 		<select id ="ballcandidates" class="ballform-select" aria-label="Default select example">
 			<option value="" disabled="disabled" selected>Show Candidates...</option>
 		</select>
+		<input type="hidden" id="hidstart" name="toksen" value="">
+		<input type="hidden" id="hidend" name="tokssen" value="">
 		</div>
 	</div>
 </div>
@@ -224,9 +219,11 @@ for (var i = 0; i < ballots.length; i++){
 	if (ballot.btxhash.trim() === conhash.trim() ) {
 		document.getElementById("ballconhash").innerHTML = "<strong>Contract Hash  :</strong>  ".concat(ballot.btxhash);
 		document.getElementById("ballname").innerHTML = "<strong>Election Name  :</strong>  ".concat(ballot.name);
-		document.getElementById("ballstart-end").innerHTML = "<strong>Start - End  :</strong>  ".concat(timeConverter(ballot.start).concat("  ~~~  ",timeConverter(ballot.end)));
+		document.getElementById("ballstart-end").innerHTML = "<strong>Start - End  :</strong>  ".concat(timeConverter(ballot.start).concat("<strong>--</strong>  ",timeConverter(ballot.end)));
 		document.getElementById("balltotalcandidates").innerHTML = "<strong>Candidate Count  :</strong>  ".concat(ballot.totalcandidates);
 		document.getElementById("ballcandidates").innerHTML = ballot.candidates;
+		document.getElementById("hidstart").value = ballot.start;
+		document.getElementById("hidend").value = ballot.end;
 		candies.options[candies.options.length] = new Option("Show Candidates...", "",false,true);
 		for (var i = 0; i < ballot.candidates.length; i++) {
 			candies.options[candies.options.length] = new Option(ballot.candidates[i], ballot.candidates[i],false,false);

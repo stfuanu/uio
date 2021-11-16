@@ -5,6 +5,8 @@ $(function() {
     hideFlash();
 });
 
+// new-pp
+
 // 14sNixMpyH2L1KQNaudxJm2CakhYgYEDtJ
 // 140edf6c44171ab7c93cb2df9da9cb56d253757c4b16badfde6cdfba86514b
 
@@ -42,26 +44,82 @@ function getballots() {
     });
 }
 
-// function oneballotdata() {
-// 	setInterval(function () {
-// 		var d = document.getElementById("selectballot");
-// 		let conhash = d.options[d.selectedIndex].value;
 
-// 		var uri = "api/electioninfo/".concat(conhash)
+function Getaddrinfoo() {
 
-// 		fetch(uri).then(function (response) {
-// 			return response.json();
-// 		}).then(function (data) {
+    
+}
 
-// 		document.getElementById("tvotes").innerHTML = data.tvote
-// 		document.getElementById("tcand").innerHTML = data.ballot.totalcandidates
 
-// 		}).catch(function (error) {
-// 			console.log(error);
-// 		});
 
-// 	}, 1000);
-// }
+function Getaddrinfoo() {
+
+    var d = document.getElementById("addr").value;
+
+    var uri = "api/addrinfo/".concat(d)
+
+    fetch(uri).then(function (response) {
+        return response.json();
+    }).then(function (data) {
+        document.getElementById("badgeaddr").innerHTML = data.NumofTxns
+        if (data.AsVoter_VtxID != null) {
+
+            for (var i = 0; i < data.AsVoter_VtxID.length; i++) {
+                ndata = data.AsVoter_VtxID[i]
+                $('.list-groupvoter').append("<a href='"+uri+"' class='list-group-item list-group-item-success'>"+ndata.txhash+"</a>");
+            }
+        }
+        if (data.Ballot_BtxID != null) {
+
+            for (var i = 0; i < data.Ballot_BtxID.length; i++) {
+                ndata = data.Ballot_BtxID[i]
+                $('.list-groupball').append("<a href='"+uri+"' class='list-group-item list-group-item-success'>"+ndata.txhash+"</a>");
+                // console.log(ndata)
+            }
+        }
+        if (data.AsCandidate_VtxID != null) {
+
+            for (var i = 0; i < data.AsCandidate_VtxID.length; i++) {
+                ndata = data.AsCandidate_VtxID[i]
+                $('.list-groupcandy').append("<a href='"+uri+"' class='list-group-item list-group-item-success'>"+ndata.txhash+"</a>");
+            }
+        }
+
+
+
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
+
+
+
+function verifyTimestamp() {
+
+    start_stamp = parseInt(document.getElementById("hidstart").value)
+    end_stamp = parseInt(document.getElementById("hidend").value)
+
+    curr_timeraw = + new Date();
+    curr_timee = curr_timeraw.toString().replace(/...$/g, '');
+    curr_time = parseInt(curr_timee)
+
+
+    if (end_stamp > curr_time && curr_time > start_stamp) {
+        return true;
+    } else if (curr_time < start_stamp) {
+        alert("Election has not yet started !");
+        return false;
+
+    } else if (curr_time > end_stamp) {
+        alert("Election has already ended !");
+        return false;
+    } else {
+        alert("Start end order is incorrect or maybe someother problem.");
+        return false
+    }
+
+
+}
 
 function showFlash(obj)
 {
@@ -111,6 +169,11 @@ function VoteNow(){
 
     if (document.getElementById("LockUnlock").innerText !== "Unlock & Edit") {
         alert("Verify & Lock Your vote , before Voting!")
+        return
+    }
+
+    if (verifyTimestamp() === false) {
+        // console.log("false eit")
         return
     }
 

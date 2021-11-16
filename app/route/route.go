@@ -104,6 +104,9 @@ func routes() *httprouter.Router {
 	r.GET("/api/vote/:hash", hr.Handler(alice.
 		New().
 		ThenFunc(controller.GetBlock)))
+	r.GET("/api/addrinfo/:addr", hr.Handler(alice.
+		New().
+		ThenFunc(controller.Getaddrinfo)))
 
 	r.GET("/api/electioninfo/:btxhash", hr.Handler(alice.
 		New().

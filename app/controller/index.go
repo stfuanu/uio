@@ -29,7 +29,7 @@ func IndexGET(w http.ResponseWriter, r *http.Request) {
 		v.Vars["first_name"] = sess.Values["first_name"]
 		v.Vars["token"] = csrfbanana.Token(w, r, sess)
 		v.Vars["wallet"] = sess.Values["wallet"]
-		v.Vars["addrinfo"] = sess.Values["addrinfo"]
+		// v.Vars["addrinfo"] = sess.Values["addrinfo"]
 		v.Vars["ballots"] = core.Ballots
 		jsonString, _ := json.Marshal(core.Ballots)
 		v.Vars["ballotjson"] = string(jsonString)
