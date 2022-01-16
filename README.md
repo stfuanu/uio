@@ -1,5 +1,17 @@
 # E-Voting System on Blockchain - (web)
 
+## Screenshots :
+
+![WhatsApp Image 2021-11-16 at 4 45 50 AM (2)](https://user-images.githubusercontent.com/59210087/149657296-4e4ef2f6-c585-41d6-92fd-cb571e31e384.jpeg)
+
+![WhatsApp Image 2021-11-16 at 4 45 50 AM (1)](https://user-images.githubusercontent.com/59210087/149657286-3ebb117a-ab7d-4f35-bd4b-7b31e344664c.jpeg)
+
+![WhatsApp Image 2021-11-16 at 4 45 50 AM (3)](https://user-images.githubusercontent.com/59210087/149657346-de99f55f-b7f3-423d-8bec-10279afbf1b6.jpeg)
+
+![WhatsApp Image 2021-11-16 at 4 45 50 AM](https://user-images.githubusercontent.com/59210087/149657333-561b4f19-18e8-4a04-b1de-d34680f074b2.jpeg)
+
+
+
 ## Installation :
 
 
