@@ -56,3 +56,31 @@ $ go run main.go
 ```
 
 5). You should be able to see Application running on http-port::80 on Localhost on your system .
+
+
+### Votes.json (Example :)
+```json
+[
+ {
+  "index": 0,
+  "timestamp": "2021-11-16 21:56:14.656203173 +0530 IST",
+  "votes": [
+   {
+    "txhash": "f7da74fc7b36271e20eb8442404e80b16c6ed15c8f37cf23cb5e2d9aec76ab70",
+    "timestamp": "2021-11-16 21:56:14.656189562 +0530 IST",
+    "voter": {
+     "address": "VOTER_ADDRESS",
+     "pubkey": "VOTER_PUBLIC_KEY",
+     "signature": "SIGNATURE_PLUS_R"
+    },
+    "candidate": "CANDIDATE_ADDRESS",
+    "status": true,
+    "contract": "CONTRACT_HASH"
+   }
+  ],
+  "nonce": 920620,
+  "prevhash": "0",
+  "hash": "000005d21457957588c5d41fdbe96435cf16ff435ec5d1f4ad48e8348fd03a11"
+ }
+ ]
+```
