@@ -1,1 +1,6 @@
-btx admin panel (do if possible)
+short term:
+btx admin panel
+deploy ballot/election/contract
+
+long term:
+zero knowledge proof
