@@ -3,4 +3,4 @@ btx admin panel
 deploy ballot/election/contract
 
 long term:
-zero knowledge proof
+replace auth-flow with zero knowledge proof
