@@ -340,7 +340,7 @@ func Verify(vtx Vote) bool {
 
 	// refVoutPubKeyHash := prevTx.Vout[vin.Vout].PubKeyHash
 
-	// // check that the spend coin is owned by vin.PubKey
+	// // check that the spend coin is owned by vin.PubKey 
 	// if !bytes.Equal(PublicKeyHash(vin.PubKey), refVoutPubKeyHash) {
 	// 	return false
 	// }
