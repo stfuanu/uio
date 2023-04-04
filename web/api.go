@@ -24,7 +24,7 @@ type Jsondata struct {
 
 type BallData struct {
 	Voter  string `json:"voter"`
-	contra string `json:"contract"` // candidate to default hi rahega na
+	contra string `json:"contract"` // candidate to default hi rahega na 
 }
 
 type ResponseToVoter struct {
