@@ -105,7 +105,7 @@ func Getaddrinfo(w http.ResponseWriter, r *http.Request) {
 	// fmt.Println(reqhash)
 
 	// for _, block := range core.Blockchain {
-	// 	if block.Hash == Hashy {
+	// 	if block.Hash == Hashy { 
 
 	addrinfoo := core.GetAllInfoByAddr(Hashy)
 	blk, err := json.MarshalIndent(addrinfoo, "", "  ")
