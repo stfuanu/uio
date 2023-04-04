@@ -24,7 +24,7 @@ mysql> describe user;
 ```
 
 3). Install all dependencies from go.mod file in the root folder .
-by --->  $ go get <package_name> or go install <package_name>
+by --->  $ go get <package_name> or go install <package_name> 
 
 ```golang
 module uio
