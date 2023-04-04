@@ -64,7 +64,7 @@ require (
 4). Run/Build the project from main.go
 
 ```console
-$ go run main.go
+$ go run main.go 
 ```
 
 5). You should be able to see Application running on http-port::80 on Localhost on your system .
