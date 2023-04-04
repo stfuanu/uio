@@ -1,6 +1,6 @@
 short term:
 btx admin panel
-deploy ballot/election/contract
+deploy ballot/election/contract 
 
 long term:
 replace auth-flow with zero knowledge proof
