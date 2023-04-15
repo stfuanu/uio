@@ -36,6 +36,7 @@ CREATE TABLE user (
 ```
 
 ```mysql
+mysql -u root -p
 CREATE USER 'adminuser'@'localhost' IDENTIFIED BY 'password123';
 GRANT ALL PRIVILEGES ON auth.* TO 'adminuser'@'localhost';
 
